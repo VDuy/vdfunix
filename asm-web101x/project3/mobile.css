@@ -1,0 +1,51 @@
+@media only screen and (max-width: 768px) {
+  /* For mobile: */
+
+  .col-4 {
+    width: 100%;
+  }
+  .col-6 {
+    width: 100%;
+  }
+
+  .col-8 {
+    width: 100%;
+  }
+
+  #banner h1 {
+    position: relative;
+    left: 4%;
+    font-weight: 900;
+    font-family: "Lora", serif;
+  }
+  #banner p {
+    position: relative;
+    left: 4%;
+    font-family: "Trebuchet MS", sans-serif;
+  }
+  #banner img {
+    display: none;
+    width: 100%;
+    height: auto;
+  }
+
+  #main-content h2 {
+    margin-left: 4%;
+    padding-top: 40px;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-weight: lighter;
+    color: rgb(53, 52, 52);
+  }
+  #main-content p {
+    margin-left: 4%;
+    font-size: small;
+  }
+
+  footer p {
+    font-size: small;
+  }
+  footer a:link {
+    text-decoration: none;
+    font-weight: bold;
+  }
+}

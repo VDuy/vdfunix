@@ -1,0 +1,95 @@
+.row::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: #333;
+}
+.nav__pc {
+  display: block;
+  width: 100%;
+}
+.nav__list {
+  display: flex;
+  list-style: none;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 48px;
+}
+
+.nav__bar-btn {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  margin: 8px;
+  display: none;
+}
+.nav__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  animation: fadeIn linear 0.2s;
+}
+.nav__mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 100%;
+  background-color: #fff;
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform linear 0.2s, opacity 0.2s;
+}
+.nav__mobile-list {
+  display: flex;
+  margin-top: 24px;
+  display: none;
+  text-decoration: none;
+}
+.nav__mobile_link {
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  display: none;
+  padding: 8px 0;
+}
+
+.nav__input:checked ~ .nav__overlay {
+  display: block;
+}
+.nav__input:checked ~ .nav__mobile {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+@media (max-width: 1023px) {
+  /* mobile nav */
+  .nav__bar-btn {
+    display: block;
+  }
+  .nav__pc {
+    display: none;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

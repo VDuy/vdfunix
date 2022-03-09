@@ -1,0 +1,206 @@
+* {
+  box-sizing: border-box;
+}
+.row::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: #333;
+}
+.nav__pc {
+  display: block;
+  width: 100%;
+}
+.nav__list {
+  display: flex;
+  list-style: none;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 48px;
+}
+
+.nav__bar-btn {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  margin: 8px;
+  display: none;
+}
+.nav__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  animation: fadeIn linear 0.2s;
+}
+.nav__mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 100%;
+  background-color: #fff;
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform linear 0.2s, opacity 0.2s;
+}
+.nav__mobile-list {
+  display: flex;
+  margin-top: 24px;
+  display: none;
+  text-decoration: none;
+}
+.nav__mobile_link {
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  padding: 8px 0;
+}
+
+.nav__input:checked ~ .nav__overlay {
+  display: block;
+}
+.nav__input:checked ~ .nav__mobile {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.slideshow {
+  margin-top: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+@media (max-width: 768px) {
+  /* mobile nav */
+  .nav__bar-btn {
+    display: block;
+  }
+  .nav__pc {
+    display: none;
+  }
+  .slideshow {
+    display: none;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 992px) {
+  .nav ul li:nth-child(1) {
+    margin-left: 5%;
+  }
+  .nav ul li:nth-child(3) {
+    margin-right: 60%;
+  }
+}
+
+.mySlides {
+  display: none;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 50%;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev,
+  .next,
+  .text {
+    font-size: 11px;
+  }
+}
