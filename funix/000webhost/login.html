@@ -7,10 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./grid.css" type="text/css" />
   <link rel="stylesheet" href="./login-signup.css" />
+  <style>
+    .toggle {
+      display: inline;
+      width: auto;
+      line-height: 15px;
+
+    }
+  </style>
   <title>LogIn</title>
+
 </head>
 
 <body>
+ 
   <div class="row">
     <div class="l-4 m-4 col-12 l-o-4 m-o-4" id="login-form-wrap">
       <h2>Login</h2>
@@ -19,8 +29,10 @@
           <input type="text" placeholder="Username" />
         </p>
         <p>
-          <input type="password" placeholder="Password" />
+          <input id="password" type="password" placeholder="Password" />
+          <input class="toggle" id="toggleBtn" type="button" onclick="togglepassword()" value="Show password">
         </p>
+
         <p>
           <input style=" border-radius: 8px; font-size: large; color: rgb(0, 153, 255);" type="button" value="Login" />
         </p>
@@ -30,6 +42,8 @@
       </div>
     </div>
   </div>
+
+
 </body>
 
 </html>

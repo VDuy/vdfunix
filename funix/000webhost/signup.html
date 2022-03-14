@@ -8,24 +8,50 @@
   <link rel="stylesheet" href="./grid.css" type="text/css" />
   <link rel="stylesheet" href="./login-signup.css" />
   <title>SignUp</title>
+  <style>
+    .toggle {
+      display: inline;
+      width: auto;
+      line-height: 15px;
+
+    }
+  </style>
 </head>
 
 <body>
+  <script type="text/javascript" lang="javascript">
+    function togglepassword() {
+      var password = document.getElementById('password');
+      var toggleBtn = document.getElementById('toggleBtn');
+      if (password.type == "password") {
+        password.type = "text";
+        toggleBtn.value = "Hide password"
+      } else {
+        password.type = "password";
+        toggleBtn.value = "Show password"
+      }
+
+    }
+  </script>
+  
   <div class="row">
     <div class="l-4 m-4 col-12 l-o-4 m-o-4" id="login-form-wrap">
       <h2>SignUp</h2>
       <div id="login-form">
         <p>
-          <input type="text"  placeholder="Username" required />
+          <input type="text" placeholder="Username" required />
         </p>
         <p>
-          <input type="password" placeholder="Password" required />
+          <input id="password" type="password" placeholder="Password" required />
         </p>
         <p>
-          <input type="password" placeholder="Repeat Password" required />
+          <input id="password" type="password" placeholder="Repeat Password" required />
         </p>
+        <input class="toggle" id="toggleBtn" type="button" onclick="togglepassword()" value="Show password">
+
         <p>
           <input style="font-size: large; color: rgb(0, 153, 255);" type="button" value="Sign Up" />
+
         </p>
       </div>
       <div id="create-account-wrap">
@@ -33,6 +59,7 @@
       </div>
     </div>
   </div>
+
 </body>
 
 </html>
