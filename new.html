@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>project1-prf192x_02</title>
+    <title>New</title>
 </head>
 
 <body>
-   
-    <button onclick=" notify()">Try it</button>
-
+    <p>check console</p>
     <script>
-
-        function notify() {
-
-            alert("Chào mừng bạn đến với ứng dụng JavaScript đầu tiên");
-
+        function square(x) { return (x * x) };
+        function cube(x) {
+            return (x * square(x));
         }
+        console.log(cube(2));
+
 
     </script>
 </body>
