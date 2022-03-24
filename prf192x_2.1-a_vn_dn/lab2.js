@@ -5,7 +5,6 @@ const country = "Vietnam";
 let population = 97338580;
 // Lab 2.2
 const language = "Vietnamese";
-
 console.log("Kiểm tra biến boolean: " + isIsland);
 console.log("Đất nước: " + country);
 console.log("Ngôn ngữ: " + language);
