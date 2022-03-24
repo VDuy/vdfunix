@@ -55,3 +55,24 @@
 // }else {
 //     console.log('No one win');
 // }
+
+const myObject = {
+    firstName: 'Duy',
+    lastName: 'Vu',
+    clacAge: function (age) {
+        const date = new Date();
+        const year = date.getFullYear();
+        return year - age;
+    },
+    coleage: 'Hust',
+
+    getSummary: function () {
+        return `${this.firstName} ${this.lastName} is ${this.clacAge(1999)} year olds, and study at ${this.coleage}`
+    }
+};
+console.log(myObject);
+myObject.addrandom = 'raddom value'
+console.log(myObject);
+myObject['random'] = 'radom222'
+console.log(myObject.getSummary());
+
