@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="lab7.css" type="text/css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <title>Guess My Number!</title>
+</head>
+
+<body>
+    <!-- navigation -->
+    <div style="font-size: medium;" class="nav">
+        <!-- Nav PC -->
+        <nav class="nav__pc">
+            <ul class="nav__list">
+                <li>
+                    <a href="index.html" class="nav__link">Home</a>
+                </li>
+                <li>
+                    <a href="lab7.html" class="nav__link">Guess Number</a>
+                </li>
+                <li>
+                    <a href="lab8.html" class="nav__link">Model Window</a>
+                </li>
+                <li>
+                    <a href="lab.html" class="nav__link"> Pig Game</a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+
+    <header>
+        <h1 id="h1">Guess My Number!</h1>
+        <p class="between">(Between 1 and 20)</p>
+        <button class="again" id="btn"> Again!</button>
+        <div class="number">?</div>
+    </header>
+    <main>
+        <section class="left">
+            <input type="number" class="guess" />
+            <button class="check" id="btn">Check!</button>
+        </section>
+        <section class="right">
+            <p class="message">Start guessing...</p>
+            <p class="label-score">💯 Score: <span class="score">20</span></p>
+            <p class="label-highscore">
+                🥇 Highscore: <span class="highscore">0</span>
+            </p>
+        </section>
+    </main>
+    </div>
+    <script src="lab7.js"></script>
+</body>
+
+</html>

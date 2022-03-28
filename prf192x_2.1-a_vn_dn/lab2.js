@@ -19,6 +19,7 @@ const populationPlus1 = population + 1;
 console.log("Tăng dân số thêm 1: " + (population + 1));
 const populationOfFinland = 6000000;
 console.log("Dân số đông hơn dân Phần Lan: " + (populationPlus1 > populationOfFinland));
+
 const mediumPopulation = 33000000;
 console.log("Việt Nam ít dân hơn so với mức trung bình: " + (population < mediumPopulation));
 

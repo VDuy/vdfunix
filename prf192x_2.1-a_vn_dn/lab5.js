@@ -69,8 +69,18 @@ console.log(percentages);
  */
 
 //lab 5.6
-console.log('lab5.6');
+//loop backward, loop inside loop
 
+console.log('lab5.6');
+const listOfNeighbours = new Array(
+    ['Canada', 'Mexico'],
+    ['Spain'],
+    ['Norway', 'Sweden', 'Russia']
+);
+for (let i = 0; i < listOfNeighbours.length; i++) {
+    for (let x = 0; x < listOfNeighbours[i].length; x++)
+        console.log(`Neighbour: ${listOfNeighbours[i][x]}`);
+}
 
 // lab 5.7 
 // while loop

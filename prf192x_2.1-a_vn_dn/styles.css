@@ -1,0 +1,26 @@
+.row::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: #333;
+}
+.nav__pc {
+  display: block;
+  width: 100%;
+}
+.nav__list {
+  display: flex;
+  list-style: none;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 48px;
+}
