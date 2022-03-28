@@ -48,7 +48,11 @@ document.querySelector('.check').addEventListener('click', function () {
     }
 
 });
+
+// lab 10
 // click again button to guess again, no reload page
+
+
 document.querySelector('.again').addEventListener('click', function () {
     score = 20;
     secretNumber = Math.trunc(Math.random() * 20) + 1;
