@@ -17,7 +17,7 @@
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<link rel="stylesheet" href="./style.css">
-	
+
 
 	<!-- style -->
 	<style>
@@ -59,56 +59,69 @@
 						<i class="bi bi-file-earmark-person"></i>
 						About
 					</a>
-				</li>
+				</li> 
+				<!-- <li class="">
+					<a href="../index.html">
+						<i class="bi bi-app"> </i> My Web
+					</a>
+				</li> -->
 			</ul>
 		</nav>
 
 		<!-- Page Content Holder -->
 		<div id="content">
+			<!-- Pet Management -->
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#">Pet Management</a>
 				</div>
 			</nav>
-			
+			<!-- Input Form -->
 			<div class="container" id="main">
 				<div class="row justify-content-center align-items-center mt-4">
 					<div class="col-lg-6 col-lg-offset-4">
 						<form>
+							<!-- Pet ID -->
 							<div class="form-group row mb-3">
 								<label for="input-id" class="col-sm-3 col-form-label">Pet ID</label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" id="input-id" placeholder="Input ID">
 								</div>
 							</div>
+
 							<div class="form-group row mb-3">
+								<!-- Pet Name -->
 								<label for="input-name" class="col-sm-3 col-form-label">Pet Name</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" id="input-name" placeholder="Input Name">
 								</div>
+								<!-- Age -->
 								<label for="input-age" class="col-sm-1 col-form-label"
 									style="text-align:right">Age</label>
 								<div class="col-sm-3">
 									<input type="number" class="form-control" id="input-age" placeholder="Input Age">
 								</div>
 							</div>
+							<!-- Type -->
 							<div class="form-group row mb-3">
 								<label for="input-type" class="col-sm-3 col-form-label">Type</label>
 								<div class="col-sm-9">
-									<select class="form-control" id="input-type">
+									<select class="form-control" id="input-types">
 										<option>Select Type</option>
 										<option>Dog</option>
 										<option>Cat</option>
 									</select>
 								</div>
 							</div>
+							<!--  -->
 							<div class="form-group row mb-3">
+								<!-- Weight -->
 								<label for="input-weight" class="col-sm-3 col-form-label">Weight</label>
 								<div class="col-sm-3">
 									<input type="number" class="form-control" id="input-weight"
 										placeholder="Input Weight">
 								</div>
-
+								<!-- Height -->
 								<label for="input-length" class="col-sm-3 col-form-label"
 									style="text-align:right">Length</label>
 								<div class="col-sm-3">
@@ -116,11 +129,14 @@
 										placeholder="Input Length">
 								</div>
 							</div>
+
 							<div class="form-group row mb-3">
+								<!--Color  -->
 								<label class="col-sm-3 col-form-label">Color</label>
 								<div class="col-sm-3">
 									<input type="color" class="form-control" id="input-color-1">
 								</div>
+								<!-- Breed -->
 								<label for="input-type" class="col-sm-3 col-form-label"
 									style="text-align:right">Breed</label>
 								<div class="col-sm-3">
@@ -137,6 +153,7 @@
 									</select>
 								</div>
 							</div>
+							<!-- Checkbox -->
 							<div class="form-group row mb-3">
 								<div class="col-sm-3"></div>
 								<div class="custom-control custom-checkbox col-sm-3">
@@ -152,12 +169,15 @@
 									<label class="custom-control-label" for="input-sterilized">Sterilized</label>
 								</div>
 							</div>
+							<!-- button Submit and Show Healthy Pet -->
 							<button type="button" class="btn btn-primary" id="submit-btn">Submit</button>
 							<button type="button" class="btn btn-warning" id="healthy-btn">Show Healthy Pet</button>
+							<!--  -->
 						</form>
 					</div>
 				</div>
 			</div>
+
 			<div class="container" style="max-width: 90%">
 				<table class="table table-striped">
 					<thead>
@@ -177,7 +197,7 @@
 							<th scope="col">Action</th>
 						</tr>
 					</thead>
-					
+
 					<tbody id="tbody">
 						<tr>
 							<th scope="row">P001</th>
