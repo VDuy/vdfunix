@@ -1,33 +1,59 @@
 'use strict';
+let idInput = document.getElementById('input-id').value;
+let nameInput = document.getElementById('input-name').value;
+let ageInput = parseInt(document.getElementById('input-age').value);
+let typeInput = document.getElementById('input-types').value;
+let weightInput = parseInt(document.getElementById('input-weight').value);
+let lengthInput = parseInt(document.getElementById('input-length').value);
+let colorInput = document.getElementById('input-color-1').value;
+let breedInput = document.getElementById('input-type').value;
+let vaccinatedInput = document.getElementById('input-vaccinated').checked;
+let dewormedInput = document.getElementById('input-dewormed').checked;
+let sterilizedInput = document.getElementById('input-sterilized').checked;
+let date = new Date();
 // Bắt sự kiện Click vào nút "Submit"
-let submitBtn = document.querySelector('#submit-btn');
+let submitBtn = document.getElementById('submit-btn');
 // kiểm tra việc Bắt sự kiện Click vào nút "Submit"
 if (submitBtn != null) {
     console.log('not click');
     console.log(submitBtn);
-    submitBtn.addEventListener('click', submitBtn);
 }
 
 submitBtn.addEventListener('click', function (e) {
     console.log('click Submit button');
-});
+    //  Lấy được dữ liệu từ các Input Form
 
-//  Lấy được dữ liệu từ các Input Form
-const getInputForm = function () {
-    let petId = Number(document.querySelector('#input-id').value);
-    let petName = document.querySelector('#input-name').value;
-    let petAge = Number(document.querySelector('#input-age').value);
-    let petType = document.querySelector('#input-types').value;
-    let petWeight = parseInt(document.querySelector('#input-weight').value);
-    let petHeight = document.querySelector('#input-length').value;
-    let petColor = document.querySelector('#input-color-1').value;
-    let petBeed = document.querySelector('#input-').value;
-    let petVaccinated = document.querySelector('#input-vaccinated').checked;
-    let petDewormed = document.querySelector('#input-dewormed').checked;
-    let petSterilized = document.querySelector('#input-sterilized').checked;
-    let date = new Date;
+    // Validate dữ liệu hợp lệ
+    if (idInput === "" && nameInput === "" && ageInput === ""
+        && typeInput === "" && weightInput === ""
+        && lengthInput === "") {
+        alert('Please fill the fields');
+        return;
+    }
+    // validate unique id
+
+
+    // validate fields
+    else if (ageInput < 1 && ageInput > 15) {
+        alert('Age must be between 1 and 15!')
+        return;
+    }
+    else if (weightInput < 1 && weightInput > 15) {
+        alert('Weight must be between 1 and 15')
+        return;
+    } else if (lengthInput < 1 && lengthInput > 100) {
+        alert('Length must be between 1 and 100!')
+        return;
+    } else if (typeInput == '') {
+        alert('Please select Type!');
+        return;
+    }
+    else if (breedInput == '') {
+        alert('Please select Breed!')
+    }
 
     const petArr = []
+
     const data = {
         id: idInput.value,
         name: nameInput.value,
@@ -44,34 +70,46 @@ const getInputForm = function () {
     }
 
     petArr.push(data);
-}
+
+    console.log(data);
+    console.log(petArr);
+});
 
 // đưa dữ liệu của mảng để hiển thị ra giao diện cho người dùng.
 function renderTableData(petArr) {
 
+
+    //xóa nội dung hiện có của bảng
+    const tableBodyEl = document.querySelector("#tbody");
+    tableBodyEl.innerHTML = '';
+
+
+
+
+    // duyệt qua các phần tử trong petArr, 
+    //  tạo các hàng tương ứng và thêm vào bảng
+
+    const row = document.createElement('tr')
+    row.innerHTML = '<HTML code>'
+    tableBodyEl.appendChild(row)
 };
-
-
-//xóa nội dung hiện có của bảng
-tableBodyEl.innerHTML = '';
-
 //  Xóa một thú cưng
-const deletpet = function () {
-
-
-    // confirm('Are you sure?')
+function deletePet() {
+    confirm('Are you sure?');
 }
 
-// duyệt qua các phần tử trong petArr, 
-//  tạo các hàng tương ứng và thêm vào bảng
 
-const row = document.createElement('tr')
-row.innerHTML = '<HTML code>'
-tableBodyEl.appendChild(row)
+
 
 //Hiển thị các thú cưng khỏe mạnh
 // click button Show Healthy Pet
 let healthyCheck = false;
+let healtyPetBtn = document.getElementById('healthy-btn');
+healtyPetBtn.addEventListener('click', function (e) {
+    console.log('show healthy pet');
+
+});
+
 
 
 //Tính toán chỉ số BMI
