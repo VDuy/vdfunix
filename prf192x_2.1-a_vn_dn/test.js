@@ -1,35 +1,37 @@
-// const name = 'Jonas';
-// const first = () => {
-//     let a = 1;
-//     const b = second(7, 9);
-//     a = a + b;
-//     return a;
-// };
-// function second(x, y) {
-//     var c;
-//     return c;
+
+
+// đưa dữ liệu của mảng để hiển thị ra giao diện cho người dùng.
+// function renderTableData(petArr) {
+//     //xóa nội dung hiện có của bảng
+//     const tableBodyEl = document.querySelector("#tbody");
+//     if (tableBodyEl != null) {
+//         tableBodyEl.innerHTML = ``;
+//         // duyệt qua các phần tử trong petArr,
+//         //  tạo các hàng tương ứng và thêm vào bảng 
+
+//         for (let i = 0; i < petArr.length; i++) {
+//             let petInput = petArr[i];
+//             const row = document.createElement('tr');
+//             row.innerHTML =
+//                 ` <tr>
+//             <th th scope="row" > ${petInput.idInput}</th >
+//             <td>${petInput.nameInput}</td>
+//             <td>${petInput.ageInput}</td>
+//             <td>${petInput.typeInput}</td>
+//             <td>${petInput.weightInput} kg</td>
+//             <td>${petInput.lengthInput} cm</td>
+//             <td>${petInput.breedInput}</td>
+//             <td>
+//                 <i class="bi bi-square-fill" style="color: ${petArr.colorInput}"></i>
+//             </td>
+//             <td><i class=${petInput.vaccinatedInput == true ? "bi bi-check-circle-fill" : "bi bi-x-circle-fill"}></i></td>
+//             <td><i class=${petInput.dewormedInput == true ? "bi bi-check-circle-fill" : "bi bi-x-circle-fill"}></i></td>
+//             <td><i class=${petInput.sterilizedInput == true ? "bi bi-check-circle-fill" : "bi bi-x-circle-fill"}></i></td>
+//             <td>${petInput.fullDate}</td>
+//             <td>  '<button id="btnDelete" onclick="deletePetBtn(ev)" type="button" class="btn btn-danger">Delete</button>'
+//             </td>
+//         </tr >`
+//             tableBodyEl.appendChild(row)
+//         };
+//     }
 // }
-// const x = first();
-// console.log(x);
-
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-// const ds = [-400, 3000, -650, -130, 70, 1300];
-// console.log(movements.concat(ds));
-// let sum = 0;
-// const a = [1, 2, 3, 5];
-
-// function getSum(ele) {
-//     if (ele >= 3) { sum += ele; }
-// }
-// a.forEach(getSum);
-// console.log(sum);
-
-let a = [];
-    a.unshift(1);
-    a.unshift(22);
-    a.shift();
-    a.unshift(3,[4,5]);
-    // a.shift();
-   
-          
-    console.log(a.shift());

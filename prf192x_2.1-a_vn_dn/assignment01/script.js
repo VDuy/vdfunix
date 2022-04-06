@@ -6,9 +6,11 @@ if (submitBtn != null) {
     console.log('not click');
     console.log(submitBtn);
 }
+
 const petArr = [];
-function getInput(e) {
+function getInput() {
     // e.preventDefault(); // to stop the form submitting
+    let date = new Date();
     let data = {
         idInput: document.getElementById('input-id').value,
         nameInput: document.getElementById('input-name').value,
@@ -21,42 +23,60 @@ function getInput(e) {
         vaccinatedInput: document.getElementById('input-vaccinated').checked,
         dewormedInput: document.getElementById('input-dewormed').checked,
         sterilizedInput: document.getElementById('input-sterilized').checked,
-        date: new Date(),
-        // day = date.getDate(),
-        // month = date.getMonth(),
-        // year = date.getFullYear(),
-        // fullDate = day + '-' + month + '-' + year
+        fullDate: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
     }
+
     // Validate dữ liệu hợp lệ
-    if (data.idInput === '' && data.nameInput === '' && data.ageInput === ''
-        && data.typeInput === '' && data.weightInput === ''
-        && data.lengthInput === '') {
+    if (data.idInput == "") {
+        alert('Please fill the fields');
+        return;
+    } else if (data.nameInput == "") {
+        alert('Please fill the fields');
+        return;
+    } else if (data.ageInput == "" || isNaN(data.ageInput)) {
+        alert('Please fill the fields');
+        return;
+    } else if (data.typeInput == "") {
+        alert('Please fill the fields');
+        return;
+    } else if (data.weightInput == "" || isNaN(data.weightInput)) {
+        alert('Please fill the fields');
+        return;
+    } else if (data.lengthInput == "" || isNaN(data.lengthInput)) {
         alert('Please fill the fields');
         return;
     }
     // validate unique id
-    // if (data.idInput === )
-
+    else if (petArr.find((item) => item.idInput === data.idInput)) {
+        alert("ID must unique");
+        return;
+    }
     // validate fields
-    if (data.ageInput < 1 && data.ageInput > 15) {
+    else if (data.ageInput < 1 || data.ageInput > 15) {
         alert('Age must be between 1 and 15!')
         return;
     }
-    if (data.weightInput < 1 && data.weightInput > 15) {
+    else if (data.weightInput < 1 || data.weightInput > 15) {
         alert('Weight must be between 1 and 15')
         return;
-    } if (data.lengthInput < 1 && data.lengthInput > 100) {
+    } else if (data.lengthInput < 1 || data.lengthInput > 100) {
         alert('Length must be between 1 and 100!')
         return;
-    } if (data.typeInput == '') {
+    } else if (data.typeInput == '') {
         alert('Please select Type!');
         return;
     }
-    if (data.breedInput == '') {
+    else if (data.breedInput == '') {
         alert('Please select Breed!')
+        return;
     }
+
     petArr.push(data);
+    console.log(data);
     console.log(petArr);
+
+
     //clear the form for the next entries
     // document.forms[0].reset();
 }
@@ -65,71 +85,126 @@ function getInput(e) {
 // // save to localStorage
 // localStorage.setItem('MyPetInput', JSON.stringify(petArr));
 
-function validate(data) {
+
+function renderTableData() {
+    let tableBody = document.getElementById("tbody");
+    // document.getElementById("input-id").value = "";
+    if (tableBody != null) {
+        //xoá dữ liệu cũ trong bảng
+        tableBody.innerHTML = "";
+        for (let i = 0; i < petArr.length; i++) {
+            let pet = petArr[i];
+            //tạo dòng
+            const row = document.createElement("tr");
+
+            //tạo cột
+            const petIdCol = document.createElement("td");
+            const petNameCol = document.createElement("td");
+            const petAgeCol = document.createElement("td");
+            const petTypeCol = document.createElement("td");
+            const petWeightCol = document.createElement("td");
+            const petLengthCol = document.createElement("td");
+            const petBreedCol = document.createElement("td");
+            const petColorCol = document.createElement("td");
+            const petVaccinatedCol = document.createElement("td");
+            const petDewormedCol = document.createElement("td");
+            const petSterilizedCol = document.createElement("td");
+            const petBMI = document.createElement("td");
+            const petFullDateCol = document.createElement("td");
+            const petActionCol = document.createElement("td");
+
+            petIdCol.innerHTML = pet.idInput;
+            petNameCol.innerHTML = pet.nameInput;
+            petAgeCol.innerHTML = pet.ageInput;
+            petTypeCol.innerHTML = pet.typeInput;
+            petWeightCol.innerHTML = pet.weightInput;
+            petLengthCol.innerHTML = pet.lengthInput;
+            petBreedCol.innerHTML = pet.breedInput;
+            petColorCol.innerHTML = `<i class="bi bi-square-fill" style="color: ${pet.colorInput}"></i>`;
+            if (pet.vaccinatedInput == true) {
+                petVaccinatedCol.innerHTML = `<i class="bi bi-check-circle-fill" style=color: "green"></i>`;
+            } else {
+                petVaccinatedCol.innerHTML = `<i class="bi bi-x-circle-fill"style=color: "red"></i>`;
+            } if (pet.dewormedInput == true) {
+                petDewormedCol.innerHTML = `<i class="bi bi-check-circle-fill" style=color: "green"></i>`;
+            } else {
+                petDewormedCol.innerHTML = `<i class="bi bi-x-circle-fill"style=color: "red"></i>`;
+            } if (pet.sterilizedInput == true) {
+                petSterilizedCol.innerHTML = `<i class="bi bi-check-circle-fill" style=color: "green"></i>`;
+            } else {
+                petSterilizedCol.innerHTML = `<i class="bi bi-x-circle-fill"style=color: "red"></i>`;
+            }
+            petBMI.innerHTML = '?';
+            petFullDateCol.innerHTML = pet.fullDate;
+            petActionCol.innerHTML = pet.action;
+            petActionCol.innerHTML =
+                '<button id="btnDelete" onclick="deletePetBtn(event)" type="button" class="btn btn-danger">Delete</button>';
+
+            //append cột vào dòng
+            row.appendChild(petIdCol);
+            row.appendChild(petNameCol);
+            row.appendChild(petAgeCol);
+            row.appendChild(petTypeCol);
+            row.appendChild(petWeightCol);
+            row.appendChild(petLengthCol);
+            row.appendChild(petBreedCol);
+            row.appendChild(petColorCol);
+            row.appendChild(petVaccinatedCol);
+            row.appendChild(petDewormedCol);
+            row.appendChild(petSterilizedCol);
+            row.appendChild(petBMI);
+            row.appendChild(petFullDateCol);
+            row.appendChild(petActionCol);
+
+            //append dòng vào bảng
+            tableBody.appendChild(row);
+        }
+    }
 }
-
-// đưa dữ liệu của mảng để hiển thị ra giao diện cho người dùng.
-function renderTableData(petArr) {
-    //xóa nội dung hiện có của bảng
-    const tableBodyEl = document.querySelector("#tbody");
-    tableBodyEl.innerHTML = ``;
-
-    // duyệt qua các phần tử trong petArr, 
-
-    //  tạo các hàng tương ứng và thêm vào bảng
-    const row = document.createElement('tr')
-    row.innerHTML =
-        ` <tr>
-            <th th scope="row" > ${petArr.idInput}</th >
-            <td>${petArr.nameInput}</td>
-            <td>${petArr.ageInput}</td>
-            <td>${petArr.typeInput}</td>
-            <td>${petArr.weightInput} kg</td>
-            <td>${petArr.lengthInput} cm</td>
-            <td>${petArr.breedInput}</td>
-            <td>
-                <i class="bi bi-square-fill" style="color: ${petArr.colorInput}"></i>
-            </td>
-            <td><i class=${petArr.vaccinatedInput == true ? "bi bi-check-circle-fill" : "bi bi-x-circle-fill"}></i></td>
-            <td><i class="bi bi-check-circle-fill"></i></td>
-            <td><i class="bi bi-check-circle-fill"></i></td>
-            <td>${petArr.date}</td>
-            <td><button type="button" class="btn btn-danger">Delete</button>
-            </td>
-        </tr >`
-    tableBodyEl.appendChild(row)
-};
 
 submitBtn.addEventListener('click', function (e) {
     console.log('click Submit button');
-    let input = getInput(petArr);
-    let valid = validate(input);
-    let render = renderTableData(petArr);
-    // console.log(data);
-    // console.log(petArr);
+    getInput(petArr);
+    renderTableData(petArr);
+
 });
 
 //  Xóa một thú cưng
-const deletePetBtn = document.getElementsByClassName('btn-danger');
-// deletePetBtn.addEventListener('click', function (e) {
-//     console.log('delete pet?');
-
-//     if (confirm('Are you sure?') == true) {
-//         //const deletePet = function() {
-//             console.log('pet delete');
-//         //}
-//         deletePet();
-//     } else {
-//         console.log('no delete pet');
-//     };
-// });
+const deleteRow = function (row) {
+    document.getElementById("dsTable").deleteRow(row);
+}
+function deletePetBtn(event) {
+    if (confirm("Are you sure?")) {
+        deleteRow(event.target.parentNode.parentNode.rowIndex);
+    }
+}
 
 //Hiển thị các thú cưng khỏe mạnh
 // click button Show Healthy Pet
-let healthyCheck = false;
+
 let healtyPetBtn = document.getElementById('healthy-btn');
 healtyPetBtn.addEventListener('click', function (e) {
     console.log('show healthy pet');
+    let healthyCheck = false;
+    
+    for (let i = 0; i < i < petArr.length; i++) {
+
+        let pet = petArr[i];
+        if (pet.vaccinatedInput == true && pet.dewormedInput == true && pet.sterilizedInput == true) {
+            healthyCheck = true;
+            healtyPetBtn.innerText = "Show All Pet";
+            console.log('healthy');
+            return;
+        } else {
+            console.log('not');
+            healtyPetBtn.innerText = "Show Healthy Pet";
+            return;
+        };
+
+    }
+    if (healthyCheck) {
+        healtyPetBtn.innerText = "Show Healthy Pet";
+    }
 
 });
 
@@ -141,6 +216,7 @@ let catbmi = function () {
     let cBMI = (weight * 703) / length ^ 2
     return cBMI;
 }
+
 let dogbmi = function () {
     let dBMI = (weight * 886) / length ^ 2
     return dBMI;
