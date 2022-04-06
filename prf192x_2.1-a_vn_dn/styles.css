@@ -28,3 +28,8 @@
 .hidden {
   display: none;
 }
+
+#blue-color {
+  background-color: blue;
+  color: aliceblue;
+}

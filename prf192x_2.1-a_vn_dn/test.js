@@ -35,3 +35,22 @@
 //         };
 //     }
 // }
+
+const message = document.createElement('div');
+
+message.classList.add('cookie-message');
+
+message.innerHTML = `We use cookied for improved functionality and analytics.
+ <button class="btn btn--close-cookie">Got it!</button>`;
+const header = document.querySelector('.header');
+header.prepend(message);
+// header.append(message.cloneNode(true));
+header.before(message);
+
+// delete element
+
+document.querySelector('btn btn--close-cookie').addEventListener('click', function () {
+// message.remove();
+message.parentElement.removeChild(message);
+})
+message.remove();

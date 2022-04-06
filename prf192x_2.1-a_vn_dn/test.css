@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 /* The page is NOT responsive. You can implement responsiveness yourself if you wanna have some fun 😃 */
 
 :root {
@@ -97,7 +100,7 @@
   }
   
   p {
-    color: #666;
+    color: rgb(0, 0, 0);
   }
   
  

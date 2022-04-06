@@ -161,7 +161,7 @@ function renderTableData() {
         }
     }
 }
-
+// Lấy được dữ liệu từ các Input Form
 submitBtn.addEventListener('click', function (e) {
     console.log('click Submit button');
     getInput(petArr);
@@ -181,43 +181,52 @@ function deletePetBtn(event) {
 
 //Hiển thị các thú cưng khỏe mạnh
 // click button Show Healthy Pet
-
-let healtyPetBtn = document.getElementById('healthy-btn');
-healtyPetBtn.addEventListener('click', function (e) {
+let healthyCheck = false;
+var healtyPetBtn = document.querySelector('#healthy-btn');
+healtyPetBtn.addEventListener('click', 'healtyPet();');
+function healtyPet() {
     console.log('show healthy pet');
-    let healthyCheck = false;
-    
-    for (let i = 0; i < i < petArr.length; i++) {
+    var btnHealthy = document.querySelector('#healthy-btn');
+    secondTable();
+    var tb1 = document.querySelector('tbody');
+    var tb2 = document.querySelector('tbody-2');
 
-        let pet = petArr[i];
-        if (pet.vaccinatedInput == true && pet.dewormedInput == true && pet.sterilizedInput == true) {
-            healthyCheck = true;
-            healtyPetBtn.innerText = "Show All Pet";
-            console.log('healthy');
-            return;
-        } else {
-            console.log('not');
-            healtyPetBtn.innerText = "Show Healthy Pet";
-            return;
-        };
-
-    }
-    if (healthyCheck) {
-        healtyPetBtn.innerText = "Show Healthy Pet";
-    }
-
-});
+    if (!healthyCheck) {
+        healthyCheck = true;
+        btnHealthy.innerText = "Show All Pet";
+        tb1.style.display = 'none';
+        tb2.style.display = '';
 
 
+    } else {
+        healthyCheck = false;
+        btnHealthy.innerText = "Show Healthy Pet";
+        tb1.style.display = '';
+        tb2.style.display = 'none';
 
-//Tính toán chỉ số BMI
-// nhấn vào nút "Calculate BMI"
-let catbmi = function () {
-    let cBMI = (weight * 703) / length ^ 2
-    return cBMI;
-}
-
-let dogbmi = function () {
-    let dBMI = (weight * 886) / length ^ 2
-    return dBMI;
+    };
+};
+function secondTable() {
+    var date = new Date();
+    var formattime = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.getFullYear();
+    const tableBody = document.createElement("tbody");
+    tableBody.setAttribute("idInput", "tbody-2");
+    tableBody.style.display = 'none';
+    document.querySelector(".table").appendChild(tableBody);
+    var tableshow = document.querySelector('#tbody-2');
+    const row = document.createElement('tr');
+    var iDed = document.querySelectorAll('#tbody-2 th');
+    var output = [];
+    iDed.forEach(function (value, index) {
+        var innerText = value.innerText;
+        output.push(innerText);
+    });
+    var show = petArr.forEach(function (value, index) {
+        for (var i = e; i < value.length; i++) {
+            var cour = value[i];
+            var outerHTML = output.some(function (cours, index) {
+                return cours = cour['idInput'];
+            })
+        }
+    })
 }
