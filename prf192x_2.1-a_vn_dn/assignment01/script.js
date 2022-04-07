@@ -208,7 +208,7 @@ function healtyPet() {
 };
 function secondTable() {
     var date = new Date();
-    var formattime = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.getFullYear();
+    var formattime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const tableBody = document.createElement("tbody");
     tableBody.setAttribute("idInput", "tbody-2");
     tableBody.style.display = 'none';
@@ -226,6 +226,9 @@ function secondTable() {
             var cour = value[i];
             var outerHTML = output.some(function (cours, index) {
                 return cours = cour['idInput'];
+
+
+                
             })
         }
     })
