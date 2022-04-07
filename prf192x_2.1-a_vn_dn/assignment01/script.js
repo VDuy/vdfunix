@@ -205,18 +205,18 @@ function healtyPet() {
 
     };
 };
-// show healthu pet in table
+// show healthy pet in table
 function secondTable() {
     var date = new Date();
     var formatTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const tableBody = document.createElement("tbody")
     tableBody.setAttribute("idInput", "tbody-2");
-    tableBody.style.display = 'none';
+    tableBody.style.display = "none";
     document.querySelector(".table").appendChild(tableBody);
-    var tableshow = document.querySelector('#tbody-2')
+    var tableshow = document.querySelector("#tbody-2")
     const row = document.createElement('tr')
 
-    var iDed = document.querySelectorAll('#tbody-2 th');
+    var iDed = document.querySelectorAll("#tbody-2 th");
     var output = [];
     iDed.forEach(function (value, index) {
         var innerText = value.innerText;
@@ -226,7 +226,7 @@ function secondTable() {
         for (var i = 0; i < value.length; i++) {
             var cour = value[i];
             var outerHTML = output.some(function (cours, index) {
-                return cours = cour['idInput']
+                return cours === cour['idInput']
             })
             if (!outerHTML) {
                 row.innerHTML = `<th scope="row">${cour['idInput']}</th>`
