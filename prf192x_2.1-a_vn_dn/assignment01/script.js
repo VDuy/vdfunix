@@ -6,8 +6,15 @@ if (submitBtn != null) {
     console.log('not click');
     console.log(submitBtn);
 }
-
 const petArr = [];
+// Lấy được dữ liệu từ các Input Form
+submitBtn.addEventListener('click', function (e) {
+    console.log('click Submit button');
+    getInput(petArr);
+    renderTableData();
+
+});
+
 function getInput() {
     // e.preventDefault(); // to stop the form submitting
     let date = new Date();
@@ -23,7 +30,7 @@ function getInput() {
         vaccinatedInput: document.getElementById('input-vaccinated').checked,
         dewormedInput: document.getElementById('input-dewormed').checked,
         sterilizedInput: document.getElementById('input-sterilized').checked,
-        fullDate: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+        fullDate: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
 
     }
 
@@ -73,9 +80,7 @@ function getInput() {
     }
 
     petArr.push(data);
-    console.log(data);
     console.log(petArr);
-
 
     //clear the form for the next entries
     // document.forms[0].reset();
@@ -138,7 +143,8 @@ function renderTableData() {
             petFullDateCol.innerHTML = pet.fullDate;
             petActionCol.innerHTML = pet.action;
             petActionCol.innerHTML =
-                '<button id="btnDelete" onclick="deletePetBtn(event)" type="button" class="btn btn-danger">Delete</button>';
+                `<button id="btnDelete" type="button" class="btn btn-danger" 
+                onclick="deletePetBtn(${pet.idInput})">Delete</button>`;
 
             //append cột vào dòng
             row.appendChild(petIdCol);
@@ -161,72 +167,73 @@ function renderTableData() {
         }
     }
 }
-// Lấy được dữ liệu từ các Input Form
-submitBtn.addEventListener('click', function (e) {
-    console.log('click Submit button');
-    getInput(petArr);
-    renderTableData(petArr);
 
-});
+
 
 //  Xóa một thú cưng
-const deleteRow = function (row) {
-    document.getElementById("dsTable").deleteRow(row);
-}
-function deletePetBtn(event) {
+function deletePetBtn(id) {
     if (confirm("Are you sure?")) {
-        deleteRow(event.target.parentNode.parentNode.rowIndex);
+        for (let i = 0; i < petArr.length; i++) {
+            if (petArr[i].idInput == id) {
+                petArr.splice(i, 1);
+                renderTableData(petArr);
+            }
+            console.log(`petArr`);
+        }
+
     }
 }
 
-//Hiển thị các thú cưng khỏe mạnh
+// Hiển thị các thú cưng khỏe mạnh
 // click button Show Healthy Pet
+
 let healthyCheck = false;
 let healtyPetBtn = document.querySelector('#healthy-btn');
-healtyPetBtn.setAttribute('onclick', 'healtyPet();');
+healtyPetBtn.setAttribute('onclick', 'healtyPet()');
 function healtyPet() {
-    console.log('show healthy pet');
-    var btnHealthy = document.querySelector('#healthy-btn');
+    let btnHealthy = document.querySelector('#healthy-btn');
     secondTable();
-    var tb1 = document.querySelector('#tbody');
-    var tb2 = document.querySelector('#tbody-2');
+    let tb1 = document.querySelector("#tbody");
+    let tb2 = document.querySelector("#tbody-2");
 
     if (!healthyCheck) {
         healthyCheck = true;
         btnHealthy.innerText = 'Show All Pet';
+        console.log('show all pet');
         tb1.style.display = "none";
-        tb2.style.display = " ";
+        tb2.style.display = "";
     }
     else {
         healthyCheck = false;
         btnHealthy.innerText = 'Show Healthy Pet';
-        tb1.style.display = " ";
+        console.log('show healthy pet');
+        tb1.style.display = "";
         tb2.style.display = "none";
 
     };
-};
-// show healthy pet in table
+}
 function secondTable() {
-    var date = new Date();
-    var formatTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    const tableBody = document.createElement("tbody")
+    let date = new Date();
+    let formatTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    var tableBody = document.createElement("tbody");
     tableBody.setAttribute("idInput", "tbody-2");
     tableBody.style.display = "none";
     document.querySelector(".table").appendChild(tableBody);
-    var tableshow = document.querySelector("#tbody-2")
-    const row = document.createElement('tr')
+    let tableshow = document.querySelector("#tbody-2");
+    const row = document.createElement('tr');
 
-    var iDed = document.querySelectorAll("#tbody-2 th");
-    var output = [];
+    let iDed = document.querySelectorAll("#tbody-2 th");
+    let output = [];
     iDed.forEach(function (value, index) {
-        var innerText = value.innerText;
+        let innerText = value.innerText;
         output.push(innerText);
+
     });
-    var show = petArr.forEach(function (value, index) {
-        for (var i = 0; i < value.length; i++) {
-            var cour = value[i];
-            var outerHTML = output.some(function (cours, index) {
-                return cours === cour['idInput']
+    let show = petArr.forEach(function (value, index) {
+        for (let i = 0; i < value.length; i++) {
+            let cour = value[i];
+            let outerHTML = output.some(function (cours, index) {
+                return cours === cour['idInput'];
             })
             if (!outerHTML) {
                 row.innerHTML = `<th scope="row">${cour['idInput']}</th>`
@@ -242,11 +249,34 @@ function secondTable() {
                     + `	<td><i class="bi bi-check-circle-fill"></i></td>`
                     + `<td>?</td>`
                     + `<td>${formatTime}</td>`
-                    + `<td><button id="btnDelete" onclick="deletePetBtn(event)"
-                     type="button" class="btn btn-danger">Delete</button> </td>`
+                    + `<td><button id="btnDelete" onclick="deletePetBtn(this)"
+                     type="button" class="btn btn-danger">Delete</button> </td>`;
 
-                tableshow.appendChild(row)
+                tableshow.appendChild(row);
+                a = tableshow;
             };
         };
     });
+};
+
+
+
+function calBMI() {
+    var table = document.querySelectorAll("#tbody tr");
+    var dataStr = [];
+    for (var i = 0; i < table.length; i++) {
+        var cal = table[i];
+        var weightInput = cal.children[4].textContent;
+        var lengthInput = cal.children[5].textContent;
+        var typeInput = cal.children[3].textContent;
+        if (typeInput == 'Dog') {
+            const dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
+            cal.children[11].textContent = dogBMI.toFixed(2);
+        };
+        if (typeInput == ' Cat') {
+            const catBMI = (Number(weightInput.value) * 886) / (Number(lengthInput.value) ^ 2);
+            cal.children[11].textContent = catBMI.toFixed(2);
+        };
+        dataStr.push(cal);
+    }
 };

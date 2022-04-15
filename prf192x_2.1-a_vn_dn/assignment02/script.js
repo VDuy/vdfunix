@@ -1,13 +1,13 @@
 'use strict';
 // Bắt sự kiện Click vào nút "Submit"
 let submitBtn = document.getElementById('submit-btn');
-// kiểm tra việc Bắt sự kiện Click vào nút "Submit"
-if (submitBtn != null) {
-    console.log('not click');
-    console.log(submitBtn);
-}
+// // kiểm tra việc Bắt sự kiện Click vào nút "Submit"
+// if (submitBtn != null) {
+//     console.log('not click');
+//     console.log(submitBtn);
+// }
 
-const petArr = [];
+
 function getInput() {
     // e.preventDefault(); // to stop the form submitting
     let date = new Date();
@@ -15,15 +15,15 @@ function getInput() {
         idInput: document.getElementById('input-id').value,
         nameInput: document.getElementById('input-name').value,
         ageInput: parseInt(document.getElementById('input-age').value),
-        typeInput: document.getElementById('input-type').value,
+        // typeInput: document.getElementById('input-types').value,
         weightInput: parseInt(document.getElementById('input-weight').value),
         lengthInput: parseInt(document.getElementById('input-length').value),
         colorInput: document.getElementById('input-color-1').value,
-        breedInput: document.getElementById('input-breed').value,
+        breedInput: document.getElementById('input-type').value,
         vaccinatedInput: document.getElementById('input-vaccinated').checked,
         dewormedInput: document.getElementById('input-dewormed').checked,
         sterilizedInput: document.getElementById('input-sterilized').checked,
-        fullDate: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+        fullDate: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
 
     }
 
@@ -73,14 +73,19 @@ function getInput() {
     }
 
     petArr.push(data);
-    console.log(data);
     console.log(petArr);
-
 
     //clear the form for the next entries
     // document.forms[0].reset();
 }
+const petArr = [];
+// Lấy được dữ liệu từ các Input Form
+submitBtn.addEventListener('click', function (e) {
+    // console.log('click Submit button');
+    getInput(petArr);
+    renderTableData();
 
+});
 
 // // save to localStorage
 // localStorage.setItem('MyPetInput', JSON.stringify(petArr));
@@ -138,7 +143,8 @@ function renderTableData() {
             petFullDateCol.innerHTML = pet.fullDate;
             petActionCol.innerHTML = pet.action;
             petActionCol.innerHTML =
-                '<button id="btnDelete" onclick="deletePetBtn(event)" type="button" class="btn btn-danger">Delete</button>';
+                `<button id="btnDelete" type="button" class="btn btn-danger" 
+                onclick="deletePetBtn(${pet.idInput})">Delete</button>`;
 
             //append cột vào dòng
             row.appendChild(petIdCol);
@@ -161,20 +167,93 @@ function renderTableData() {
         }
     }
 }
-// Lấy được dữ liệu từ các Input Form
-submitBtn.addEventListener('click', function (e) {
-    console.log('click Submit button');
-    getInput(petArr);
-    renderTableData(petArr);
 
-});
+
 
 //  Xóa một thú cưng
-const deleteRow = function (row) {
-    document.getElementById("dsTable").deleteRow(row);
-}
-function deletePetBtn(event) {
+function deletePetBtn(id) {
     if (confirm("Are you sure?")) {
-        deleteRow(event.target.parentNode.parentNode.rowIndex);
+        for (let i = 0; i < petArr.length; i++) {
+            if (petArr[i].idInput == id) {
+                petArr.splice(i, 1);
+                renderTableData(petArr);
+            }
+            console.log(petArr);
+        }
+
     }
 }
+
+// Hiển thị các thú cưng khỏe mạnh
+// click button Show Healthy Pet
+let healthyCheck = false;
+let healtyPetBtn = document.querySelector('#healthy-btn');
+healtyPetBtn.setAttribute('onclick', 'healtyPet()');
+function healtyPet() {
+    let btnHealthy = document.querySelector('#healthy-btn');
+    secondTable();
+    let tb1 = document.querySelector("#tbody");
+    let tb2 = document.querySelector("#tbody-2");
+
+    if (!healthyCheck) {
+        healthyCheck = true;
+        btnHealthy.innerText = 'Show All Pet';
+        console.log('show all pet');
+        tb1.style.display = "none";
+        tb2.style.display = " ";
+    }
+    else {
+        healthyCheck = false;
+        btnHealthy.innerText = 'Show Healthy Pet';
+        console.log('show healthy pet');
+        tb1.style.display = " ";
+        tb2.style.display = "none";
+
+    };
+}
+
+// show healthy pet in table
+function secondTable() {
+    let date = new Date();
+    let formatTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const tableBody = document.createElement("tbody")
+    tableBody.setAttribute("idInput", "tbody-2");
+    tableBody.style.display = "none";
+    document.querySelector(".table").appendChild(tableBody);
+    let tableshow = document.querySelector("#tbody-2")
+    const row = document.createElement('tr')
+
+    let iDed = document.querySelectorAll("#tbody-2 th");
+    let output = [];
+    iDed.forEach(function (value, index) {
+        let innerText = value.innerText;
+        output.push(innerText);
+    });
+    let show = petArr.forEach(function (value, index) {
+        for (let i = 0; i < value.length; i++) {
+            let cour = value[i];
+            let outerHTML = output.some(function (cours, index) {
+                return cours === cour['idInput']
+            })
+            if (!outerHTML) {
+                row.innerHTML = `<th scope="row">${cour['idInput']}</th>`
+                    + `<td>${cour['nameInput']}</td>`
+                    + `<td>${cour['ageInput']}</td>`
+                    + `<td>${cour['typeInput']}</td>`
+                    + `<td>${cour['weightInput']}</td>`
+                    + `<td>${cour['lengthInput']}</td>`
+                    + `<td>${cour['breedInput']}</td>`
+                    + `	<td><i class="bi bi-square-fill" style="color: ${cour['colorInput']}"></i></td>`
+                    + `	<td><i class="bi bi-check-circle-fill"></i></td>`
+                    + `	<td><i class="bi bi-check-circle-fill"></i></td>`
+                    + `	<td><i class="bi bi-check-circle-fill"></i></td>`
+                    + `<td>?</td>`
+                    + `<td>${formatTime}</td>`
+                    + `<td><button id="btnDelete" onclick="deletePetBtn(this)"
+                     type="button" class="btn btn-danger">Delete</button> </td>`
+
+                tableshow.appendChild(row)
+            };
+        };
+    });
+};

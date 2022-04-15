@@ -1,4 +1,4 @@
-
+'use strict';
 
 // đưa dữ liệu của mảng để hiển thị ra giao diện cho người dùng.
 // function renderTableData(petArr) {
@@ -13,7 +13,7 @@
 //             let petInput = petArr[i];
 //             const row = document.createElement('tr');
 //             row.innerHTML =
-//                 ` <tr>
+//                 ` <tr> 
 //             <th th scope="row" > ${petInput.idInput}</th >
 //             <td>${petInput.nameInput}</td>
 //             <td>${petInput.ageInput}</td>
@@ -36,21 +36,37 @@
 //     }
 // }
 
-const message = document.createElement('div');
+// const getCountryData = function (country) {
+//   const request = new XMLHttpRequest();
+//   request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+//   request.send();
 
-message.classList.add('cookie-message');
+//   request.addEventListener('load', function () {
+//     const [data] = JSON.parse(this.responseText);
+//     console.log(data);
 
-message.innerHTML = `We use cookied for improved functionality and analytics.
- <button class="btn btn--close-cookie">Got it!</button>`;
-const header = document.querySelector('.header');
-header.prepend(message);
-// header.append(message.cloneNode(true));
-header.before(message);
+//     const html = `
+//   <article class="country">
+//     <img class="country__img" src="${data.flag}" />
+//     <div class="country__data">
+//       <h3 class="country__name">${data.name}</h3>
+//       <h4 class="country__region">${data.region}</h4>
+//       <p class="country__row"><span>👫</span>${(
+//         +data.population / 1000000
+//       ).toFixed(1)} people</p>
+//       <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+//       <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+//     </div>
+//   </article>
+//   `;
+//     countriesContainer.insertAdjacentHTML('beforeend', html);
+//     countriesContainer.style.opacity = 1;
+//   });
+// };
 
-// delete element
+// getCountryData('portugal');
+// getCountryData('usa');
+// getCountryData('germany');
 
-document.querySelector('btn btn--close-cookie').addEventListener('click', function () {
-// message.remove();
-message.parentElement.removeChild(message);
-})
-message.remove();
+{/* <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+<p class="country__row"><span>💰</span>${data.currencies[0].name}</p> */}
