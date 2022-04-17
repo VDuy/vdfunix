@@ -55,7 +55,7 @@ const percentageOfWorld1 = (population) => {
     return population / 7900 * 100;
 };
 for (let i = 0; i < populations.length; i++) {
-    //variable perc use function to calculate percentage of each value in array populations
+  //  variable perc use function to calculate percentage of each value in array populations
     const perc = percentageOfWorld1(populations[i]);
     console.log(perc); // return all value
     percentages2.push(perc); // add value in array[]

@@ -215,7 +215,7 @@ function healtyPet() {
 function secondTable() {
     let date = new Date();
     let formatTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    var tableBody = document.createElement("tbody");
+    let tableBody = document.createElement("tbody");
     tableBody.setAttribute("idInput", "tbody-2");
     tableBody.style.display = "none";
     document.querySelector(".table").appendChild(tableBody);
@@ -249,34 +249,38 @@ function secondTable() {
                     + `	<td><i class="bi bi-check-circle-fill"></i></td>`
                     + `<td>?</td>`
                     + `<td>${formatTime}</td>`
-                    + `<td><button id="btnDelete" onclick="deletePetBtn(this)"
-                     type="button" class="btn btn-danger">Delete</button> </td>`;
+                    + `<td><button id="btnDelete" onclick="deletePetBtn(this)" type="button" class="btn btn-danger">Delete</button> </td>`;
 
                 tableshow.appendChild(row);
-                a = tableshow;
+
             };
         };
     });
 };
 
 
-
+let bmiPetBtn = document.querySelector('#bmi-btn');
+bmiPetBtn.setAttribute('onclick', 'calBMI()');
 function calBMI() {
-    var table = document.querySelectorAll("#tbody tr");
-    var dataStr = [];
-    for (var i = 0; i < table.length; i++) {
-        var cal = table[i];
-        var weightInput = cal.children[4].textContent;
-        var lengthInput = cal.children[5].textContent;
-        var typeInput = cal.children[3].textContent;
+    let table = document.querySelectorAll("#tbody tr");
+    let dataStr = [];
+    for (let i = 0; i < table.length; i++) {
+        let cal = table[i];
+        let typeInput = cal.children[3].textContent;
+        let weightInput = cal.children[4].textContent;
+        let lengthInput = cal.children[5].textContent;
+        let bmi = cal.children[11].textContent;
+
         if (typeInput == 'Dog') {
-            const dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContent = dogBMI.toFixed(2);
+            let dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
+            bmi = dogBMI.toFixed(2);
+
         };
         if (typeInput == ' Cat') {
-            const catBMI = (Number(weightInput.value) * 886) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContent = catBMI.toFixed(2);
+            let catBMI = (Number(weightInput.value) * 886) / (Number(lengthInput.value) ^ 2);
+            bmi = catBMI.toFixed(2);
         };
         dataStr.push(cal);
+        // console.log();
     }
 };
