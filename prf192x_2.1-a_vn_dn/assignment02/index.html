@@ -158,12 +158,13 @@
 							</div>
 							<button type="button" class="btn btn-primary" id="submit-btn">Submit</button>
 							<button type="button" class="btn btn-warning" id="healthy-btn">Show Healthy Pet</button>
+							<button type="button" class="btn btn-warning" id="bmi-btn">Calculate BMI</button>
 						</form>
 					</div>
 				</div>
 			</div>
 			<div class="container" style="max-width: 90%">
-				<table id="dsTable" class="table table-striped">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">ID</th>
@@ -177,10 +178,13 @@
 							<th scope="col">Vaccinated</th>
 							<th scope="col">Dewormed</th>
 							<th scope="col">Sterilized</th>
+							<th scope="col">BMI</th>
 							<th scope="col">Date Added</th>
 							<th scope="col">Action</th>
+
 						</tr>
 					</thead>
+
 					<tbody id="tbody">
 						<tr>
 							<th scope="row">P001</th>
@@ -202,7 +206,9 @@
 								<button type="button" class="btn btn-danger">Delete</button>
 							</td>
 						</tr>
+
 					</tbody>
+			
 				</table>
 			</div>
 		</div>
@@ -213,14 +219,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
 		</script>
-	<script>
-		// Toggle class active when click on navbar
-		const sidebarTitleEl = document.getElementById('sidebar-title');
-		const sidebarEl = document.getElementById('sidebar');
-		sidebarTitleEl.addEventListener('click', function () {
-			sidebarEl.classList.toggle('active');
-		});
-	</script>
+
 	<script src="./script.js"></script>
 	<script src="./script/storage.js"></script>
 </body>

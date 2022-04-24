@@ -1,18 +1,18 @@
+
+
 'use strict';
-// click submit form
-let submitBtn = document.getElementById('submit-btn');
-const petArrChecked = [];
 
 var clicks = 0;
-// Lấy được dữ liệu từ các Input Form
+var petarray = [];
+//---TẠO SỰ KIỆN CHO NÚT SUBMIT----//
+var submitBtn = document.querySelector('#submit-btn');
 submitBtn.addEventListener('click', function (e) {
-    // e.preventDefault(); // to stop the form submitting
     e.preventDefault();
     clicks += 1;
-    getInput();
+    myFunction();
 });
 
-function getInput() {
+function myFunction() {
 
     var idInput = document.querySelector('#input-id');
     var nameInput = document.querySelector('#input-name');
@@ -21,12 +21,14 @@ function getInput() {
     var weightInput = document.querySelector('#input-weight');
     var lengthInput = document.querySelector('#input-length');
     var colorInput = document.querySelector('#input-color-1');
-    // var breedInput = document.querySelector('#input-breed');
+    var breedInput = document.querySelector('#input-breed');
     var vaccinatedInput = document.querySelector('#input-vaccinated');
     var dewormedInput = document.querySelector('#input-dewormed');
     var sterilizedInput = document.querySelector('#input-sterilized');
     var submit = true;
-    const petArr = [];
+    const petArr = []
+
+    //----ĐỐI TƯỢNG CẦN INPUT---//
     const data = {
         id: idInput.value,
         name: nameInput.value,
@@ -35,7 +37,7 @@ function getInput() {
         weight: parseInt(weightInput.value),
         length: parseInt(lengthInput.value),
         color: colorInput.value,
-        // breed: breedInput.value,
+        breed: breedInput.value,
         vaccinated: vaccinatedInput.checked,
         dewormed: dewormedInput.checked,
         sterilized: sterilizedInput.checked,
@@ -44,66 +46,77 @@ function getInput() {
     var vaccinatedcheck = data['vaccinated'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill';
     var dewormedcheck = data['dewormed'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill';
     var sterilizedcheck = data['sterilized'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill';
-    var fullDate = data['date'].getUTCDate() + '/' + ((data['date'].getMonth()) + 1) + '/' + data['date'].getFullYear();
+    var formattime = data['date'].getUTCDate() + '/' + ((data['date'].getMonth()) + 1) + '/' + data['date'].getFullYear();
 
-    // Validate dữ liệu hợp lệ
-    if (data.id == "") {
-        alert('Please fill the fields');
-        return;
-    } else if (data.name == "") {
-        alert('Please fill the fields');
-        return;
-    } else if (data.age == "" || isNaN(data.age)) {
-        alert('Please fill the fields');
-        return;
+    
+
+    //----VALIDATE CÁC DỮ LIỆU TỪ FORM---//
+    var idvalue = data['id'];
+
+    function unique(idoutput) {
+        var IDed = document.querySelectorAll('#tbody th');
+        var output = [];
+        IDed.forEach(function (value, index) {
+            var innerText = value.innerText;
+            output.push(innerText);
+        })
+        var outerHTML = output.some(function (cour, index) {
+            return cour === idoutput
+        })
+        if (outerHTML) {
+            alert('ID must unique!')
+            submit = false;
+        }
+    }
+    if (clicks !== 1) {
+        unique(idvalue)
     }
 
-    else if (data.weight == "" || isNaN(data.weight)) {
-        alert('Please fill the fields');
+    if (data['id'] == "" || data['name'] == "" || data['age'] == "" || data['weight'] == "" ||
+        data['length'] == "") {
+        alert('Please fill all fields!');
         return;
-    } else if (data.length == "" || isNaN(data.length)) {
-        alert('Please fill the fields');
+    };
+
+    if (isNaN(data['age']) || data['age'] < 1 || data['age'] > 15) {
+        alert('Age must be between 1 and 15!');
         return;
-    }
-    // validate unique id
-    else if (petArr.find((item) => item.id === data.id)) {
-        alert("ID must unique");
+    };
+    if (isNaN(data['weight']) || data['weight'] < 1 || data['weight'] > 15) {
+        alert('Weight must be between 1 and 15!');
         return;
-    }
-    // validate fields
-    else if (data.age < 1 || data.age > 15) {
-        alert('Age must be between 1 and 15!')
+    };
+    if (isNaN(data['length']) || data['length'] < 1 || data['length'] > 100) {
+        alert('Length must be between 1 and 100!');
         return;
-    }
-    else if (data.weight < 1 || data.weight > 15) {
-        alert('Weight must be between 1 and 15')
-        return;
-    } else if (data.length < 1 || data.length > 100) {
-        alert('Length must be between 1 and 100!')
-        return;
-    } else if (data.type == '') {
+    };
+    if (data['type'] == 'Select Type') {
         alert('Please select Type!');
         return;
-    }
-    else if (data.breed == '') {
-        alert('Please select Breed!')
+    };
+    if (data['breed'] == 'Select Breed') {
+        alert('Please select Breed!');
         return;
-    }
+    };
 
+    //-----CÁC DỮ LIỆU HỢP LỆ =====> XỬ LÝ CÔNG VIỆC----//
     if (submit) {
-        deleteHTML();
+        DeleteHTML();
         petArr.push(data)
         renderTableData(petArr);
         clear();
         if (data['vaccinated'] && data['dewormed'] && data['sterilized']) {
-            petArrChecked.push(petArr);
+            petarray.push(petArr);
         }
     };
 
+    //-----NHẬN DỮ LIỆU VÀO BẢNG-----//
     function renderTableData(petArr) {
-        var tableBodyEl = document.querySelector('#tbody');
-        const row = document.createElement('tr');
-        var Array = petArr.forEach(function (value, index) {
+        var tableBodyEl = document.querySelector('#tbody')
+        const row = document.createElement('tr')
+
+
+        var textarray = petArr.forEach(function (value, index) {
             row.innerHTML = `<th scope="row">${value['id']}</th>`
                 + `<td>${value['name']}</td>`
                 + `<td>${value['age']}</td>`
@@ -116,13 +129,13 @@ function getInput() {
                 + `<td><i class="${dewormedcheck}"></i></td>`
                 + `<td><i class="${sterilizedcheck}"></i></td>`
                 + `<td>?</td>`
-                + `<td>${fullDate}</td>`
-                + `<td><button type="button" class="btn btn-danger" onclick="deletePetBtn(this)">Delete</button>`
+                + `<td>${formattime}</td>`
+                + `<td><button type="button" class="btn btn-danger" onclick="deletePet(this)">Delete</button>`
                 + `</td>`
-            tableBodyEl.appendChild(row);
+            tableBodyEl.appendChild(row)
         });
     };
-    //clear the form for the next entries
+    //-----RESET FORM ĐIỀN----//
     function clear() {
         idInput.value = '';
         nameInput.value = '';
@@ -130,91 +143,77 @@ function getInput() {
         ageInput.value = '';
         lengthInput.value = '';
         typeInput.value = '';
-        // breedInput.value = '';
+        breedInput.value = '';
         colorInput.value = '';
         vaccinatedInput.checked = '';
         dewormedInput.checked = '';
         sterilizedInput.checked = '';
     };
 };
-// // save to localStorage
-// localStorage.setItem('MyPetInput', JSON.stringify(petArr));
 
-//  Xóa một thú cưng
-function deletePetBtn(ID) {
-    var deletePet = confirm('Are you sure');
-    if (deletePet == true) {
+//-----XOÁ DỮ LIỆU THEO DÒNG, THEO BẢNG---//
+function deletePet(ID) {
+    var del = confirm('Are you sure');
+    if (del == true) {
         ID.parentNode.parentNode.remove();
-
-        // for (let i = 0; i < petArr.length; i++) {
-        //     if (petArr[i].id == id) {
-        //         petArr.splice(i, 1);
-        //         renderTableData(petArr);
-        //     }
-        //     console.log(`petArr`);
-        // }
-
     };
-
 };
-function deleteHTML() {
+
+function DeleteHTML() {
     var tableBody = document.querySelector('#tbody')
     if (clicks === 1) {
-        tableBody.innerHTML = "";
+        tableBody.innerHTML = ''
     };
 };
-// Hiển thị các thú cưng khỏe mạnh
-// click button Show Healthy Pet
 
-let healthyCheck = false;
-let healtyPetBtn = document.querySelector('#healthy-btn');
-healtyPetBtn.setAttribute('onclick', 'healtyPet()');
-function healtyPet() {
-    let btnHealthy = document.querySelector('#healthy-btn');
-    secondTable();
-    let tb1 = document.querySelector("#tbody");
-    let tb2 = document.querySelector("#tbody-2");
-
-    if (!healthyCheck) {
-        healthyCheck = true;
-        btnHealthy.innerText = 'Show All Pet';
-        console.log('show all pet');
-        tb1.style.display = "none";
-        tb2.style.display = "";
+//-----XỬ LÝ SỰ KIỆN HEALTHY CHECK CHO PET----//
+let healthCheck = false;
+var healthybtn = document.querySelector('#healthy-btn');
+healthybtn.setAttribute('onclick', 'healthypet();');
+function healthypet() {
+    var btnhealthy = document.querySelector('#healthy-btn')
+    tablesecond();
+    var tb1 = document.querySelector('#tbody');
+    var tb2 = document.querySelector('#tbody-2');
+    if (!healthCheck) {
+        healthCheck = true;
+        btnhealthy.innerText = 'Show All Pet';
+        tb1.style.display = 'none';
+        tb2.style.display = '';
     }
     else {
-        healthyCheck = false;
-        btnHealthy.innerText = 'Show Healthy Pet';
-        console.log('show healthy pet');
-        tb1.style.display = "";
-        tb2.style.display = "none";
-
+        healthCheck = false;
+        btnhealthy.innerText = 'Show Healthy Pet';
+        tb1.style.display = '';
+        tb2.style.display = 'none';
     };
-}
+};
 
-function secondTable() {
-    let date = new Date();
-    let fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    let tableBody = document.createElement("tbody");
-    tableBody.setAttribute("id", "tbody-2");
-    tableBody.style.display = "none";
+
+//-----HIỆN THÚ CƯNG ĐẠT CHUẨN----//
+function tablesecond() {
+    var date = new Date()
+    var formattime = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.getFullYear();
+    const tableBody = document.createElement("tbody")
+    tableBody.setAttribute("id", "tbody-2")
+    tableBody.style.display = 'none';
     document.querySelector(".table").appendChild(tableBody);
-    let tableshow = document.querySelector("#tbody-2");
-    const row = document.createElement('tr');
+    var tableshow = document.querySelector('#tbody-2')
+    const row = document.createElement('tr')
 
-    let iDed = document.querySelectorAll("#tbody-2 th");
-    let output = [];
-    iDed.forEach(function (value) {
-        let innerText = value.innerText;
+    var IDed = document.querySelectorAll('#tbody-2 th');
+    var output = [];
+    IDed.forEach(function (value, index) {
+        var innerText = value.innerText;
         output.push(innerText);
-
     });
-    let show = petArrChecked.forEach(function (value) {
-        for (let i = 0; i < value.length; i++) {
-            let cour = value[i];
-            let outerHTML = output.some(function (cours) {
+
+    var show = petarray.forEach(function (value, index) {
+        for (var i = 0; i < value.length; i++) {
+            var cour = value[i];
+            var outerHTML = output.some(function (cours, index) {
                 return cours === cour['id']
-            });
+            })
             if (!outerHTML) {
                 row.innerHTML = `<th scope="row">${cour['id']}</th>
  `                   + `<td>${cour['name']}</td>`
@@ -230,39 +229,36 @@ function secondTable() {
                     + ` <td><i class="bi bi-check-circle-fill"></i></td>`
                     + `<td><i class="bi bi-check-circle-fill"></i></td>`
                     + `<td>?</td>`
-                    + `<td>${fullDate}</td>`
+                    + `<td>${formattime}</td>`
                     + `<td><button type="button" class="btn btn-danger" onclick="deletePet(this)">Delete</button>
                          </td>`
-                tableshow.appendChild(row);
-
+                tableshow.appendChild(row)
             };
         };
     });
 };
 
-// calculate bmi
-let bmiPetBtn = document.getElementById('bmi-btn');
-bmiPetBtn.setAttribute('onclick', 'calBMI()');
+//----XỬ LÝ SỰ KIỆN TÍNH BMI CHO TỪNG CHỦNG----//
+var btnBmi = document.querySelector('#bmi-btn');
+btnBmi.setAttribute('onclick', 'calBMI();');
+
+
 function calBMI() {
     var table = document.querySelectorAll("#tbody tr");
     var dataStr = [];
     for (var i = 0; i < table.length; i++) {
         var cal = table[i];
+        var weightInput = cal.children[4].textContent;;
+        var lengthInput = cal.children[5].textContent;;
         var typeInput = cal.children[3].textContent;
-        var weightInput = cal.children[4].textContent;
-        var lengthInput = cal.children[5].textContent;
-
-
         if (typeInput == 'Dog') {
             const dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
             cal.children[11].textContent = dogBMI.toFixed(2);
-        }
-        else if (typeInput == 'Cat') {
+        };
+        if (typeInput == 'Cat') {
             const catBMI = (Number(weightInput.value) * 886) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContentF = catBMI.toFixed(2);
-        }
+            cal.children[11].textContent = catBMI.toFixed(2);
+        };
         dataStr.push(cal);
-        console.log('bmi');
-
-    }
+    };
 };
