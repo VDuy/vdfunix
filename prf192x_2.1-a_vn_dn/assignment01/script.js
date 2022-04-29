@@ -2,7 +2,7 @@
 // click submit form
 let submitBtn = document.getElementById('submit-btn');
 const petArrChecked = [];
-
+let petArr = [];
 var clicks = 0;
 // Lấy được dữ liệu từ các Input Form
 submitBtn.addEventListener('click', function (e) {
@@ -26,7 +26,7 @@ function getInput() {
     var dewormedInput = document.querySelector('#input-dewormed');
     var sterilizedInput = document.querySelector('#input-sterilized');
     var submit = true;
-    const petArr = [];
+   
     const data = {
         id: idInput.value,
         name: nameInput.value,
@@ -136,8 +136,6 @@ function getInput() {
         sterilizedInput.checked = '';
     };
 };
-// // save to localStorage
-// localStorage.setItem('MyPetInput', JSON.stringify(petArr));
 
 //  Xóa một thú cưng
 function deletePetBtn(ID) {

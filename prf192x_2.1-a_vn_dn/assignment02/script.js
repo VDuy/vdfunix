@@ -2,18 +2,18 @@
 // click submit form
 let submitBtn = document.getElementById('submit-btn');
 const petArrChecked = [];
-
+let petArr = [];
 var clicks = 0;
-// Lấy được dữ liệu từ các Input Form
+var date = new Date();
 submitBtn.addEventListener('click', function (e) {
-    // e.preventDefault(); // to stop the form submitting
+    // to stop the form submitting
     e.preventDefault();
     clicks += 1;
     getInput();
+    // saveToStorage();
 });
 
 function getInput() {
-
     var idInput = document.querySelector('#input-id');
     var nameInput = document.querySelector('#input-name');
     var ageInput = document.querySelector('#input-age');
@@ -26,7 +26,7 @@ function getInput() {
     var dewormedInput = document.querySelector('#input-dewormed');
     var sterilizedInput = document.querySelector('#input-sterilized');
     var submit = true;
-    const petArr = [];
+
     const data = {
         id: idInput.value,
         name: nameInput.value,
@@ -39,14 +39,14 @@ function getInput() {
         vaccinated: vaccinatedInput.checked,
         dewormed: dewormedInput.checked,
         sterilized: sterilizedInput.checked,
-        date: new Date(),
+
     }
     var vaccinatedcheck = data['vaccinated'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill';
     var dewormedcheck = data['dewormed'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill';
     var sterilizedcheck = data['sterilized'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill';
-    var fullDate = data['date'].getUTCDate() + '/' + ((data['date'].getMonth()) + 1) + '/' + data['date'].getFullYear();
+    var fullDate = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.getFullYear();
 
-    // Validate dữ liệu hợp lệ
+    // Validate data
     if (data.id == "") {
         alert('Please fill the fields');
         return;
@@ -57,7 +57,6 @@ function getInput() {
         alert('Please fill the fields');
         return;
     }
-
     else if (data.weight == "" || isNaN(data.weight)) {
         alert('Please fill the fields');
         return;
@@ -89,10 +88,30 @@ function getInput() {
         alert('Please select Breed!')
         return;
     }
-
+    //clear the form for the next entries
+    function clear() {
+        idInput.value = '';
+        nameInput.value = '';
+        weightInput.value = '';
+        ageInput.value = '';
+        lengthInput.value = '';
+        typeInput.value = '';
+        // breedInput.value = '';
+        colorInput.value = '';
+        vaccinatedInput.checked = '';
+        dewormedInput.checked = '';
+        sterilizedInput.checked = '';
+    };
+    function deleteHTML() {
+        var tableBody = document.querySelector('#tbody')
+        if (clicks === 1) {
+            tableBody.innerHTML = "";
+        };
+    };
     if (submit) {
         deleteHTML();
-        petArr.push(data)
+        petArr.push(data);
+        console.log(petArr);
         renderTableData(petArr);
         clear();
         if (data['vaccinated'] && data['dewormed'] && data['sterilized']) {
@@ -104,7 +123,8 @@ function getInput() {
         var tableBodyEl = document.querySelector('#tbody');
         const row = document.createElement('tr');
         var Array = petArr.forEach(function (value, index) {
-            row.innerHTML = `<th scope="row">${value['id']}</th>`
+            row.innerHTML =
+                `<th scope="row">${value['id']}</th>`
                 + `<td>${value['name']}</td>`
                 + `<td>${value['age']}</td>`
                 + `<td>${value['type']}</td>`
@@ -122,48 +142,22 @@ function getInput() {
             tableBodyEl.appendChild(row);
         });
     };
-    //clear the form for the next entries
-    function clear() {
-        idInput.value = '';
-        nameInput.value = '';
-        weightInput.value = '';
-        ageInput.value = '';
-        lengthInput.value = '';
-        typeInput.value = '';
-        // breedInput.value = '';
-        colorInput.value = '';
-        vaccinatedInput.checked = '';
-        dewormedInput.checked = '';
-        sterilizedInput.checked = '';
-    };
-};
-// // save to localStorage
-// localStorage.setItem('MyPetInput', JSON.stringify(petArr));
 
-//  Xóa một thú cưng
+};
+
+
+// delete pet
 function deletePetBtn(ID) {
     var deletePet = confirm('Are you sure');
     if (deletePet == true) {
         ID.parentNode.parentNode.remove();
-
-        // for (let i = 0; i < petArr.length; i++) {
-        //     if (petArr[i].id == id) {
-        //         petArr.splice(i, 1);
-        //         renderTableData(petArr);
-        //     }
-        //     console.log(`petArr`);
-        // }
+        console.log(`delete ${petArr}`);
 
     };
 
 };
-function deleteHTML() {
-    var tableBody = document.querySelector('#tbody')
-    if (clicks === 1) {
-        tableBody.innerHTML = "";
-    };
-};
-// Hiển thị các thú cưng khỏe mạnh
+
+
 // click button Show Healthy Pet
 
 let healthyCheck = false;
@@ -193,7 +187,6 @@ function healtyPet() {
 }
 
 function secondTable() {
-    let date = new Date();
     let fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     let tableBody = document.createElement("tbody");
     tableBody.setAttribute("id", "tbody-2");
@@ -201,14 +194,12 @@ function secondTable() {
     document.querySelector(".table").appendChild(tableBody);
     let tableshow = document.querySelector("#tbody-2");
     const row = document.createElement('tr');
-
     let iDed = document.querySelectorAll("#tbody-2 th");
-    let output = [];
     iDed.forEach(function (value) {
         let innerText = value.innerText;
         output.push(innerText);
-
     });
+    let output = [];
     let show = petArrChecked.forEach(function (value) {
         for (let i = 0; i < value.length; i++) {
             let cour = value[i];
@@ -241,28 +232,3 @@ function secondTable() {
 };
 
 // calculate bmi
-let bmiPetBtn = document.getElementById('bmi-btn');
-bmiPetBtn.setAttribute('onclick', 'calBMI()');
-function calBMI() {
-    var table = document.querySelectorAll("#tbody tr");
-    var dataStr = [];
-    for (var i = 0; i < table.length; i++) {
-        var cal = table[i];
-        var typeInput = cal.children[3].textContent;
-        var weightInput = cal.children[4].textContent;
-        var lengthInput = cal.children[5].textContent;
-
-
-        if (typeInput == 'Dog') {
-            const dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContent = dogBMI.toFixed(2);
-        }
-        else if (typeInput == 'Cat') {
-            const catBMI = (Number(weightInput.value) * 886) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContentF = catBMI.toFixed(2);
-        }
-        dataStr.push(cal);
-        console.log('bmi');
-
-    }
-};

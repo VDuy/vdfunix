@@ -1,8 +1,11 @@
 'use strict';
-function saveToStorage (key, value){
-
+function saveToStorage() {
+    if (localStorage.getItem('data') == null) {
+        localStorage.getItem('data', '[]');
+    }
+    localStorage.setItem('petArr', JSON.stringify(petArr));
 }
 
-function getFromStorage(key, value){
-    
+function getFromStorage() {
+
 }
