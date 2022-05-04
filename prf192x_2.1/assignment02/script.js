@@ -10,7 +10,8 @@ submitBtn.addEventListener('click', function (e) {
     e.preventDefault();
     clicks += 1;
     getInput();
-    // saveToStorage();
+    saveToStorage();
+
 });
 
 function getInput() {
@@ -120,6 +121,7 @@ function getInput() {
     };
 
     function renderTableData(petArr) {
+        // getFromStorage();
         var tableBodyEl = document.querySelector('#tbody');
         const row = document.createElement('tr');
         var Array = petArr.forEach(function (value, index) {
@@ -152,7 +154,7 @@ function deletePetBtn(ID) {
     if (deletePet == true) {
         ID.parentNode.parentNode.remove();
         console.log(`delete ${petArr}`);
-
+        localStorage.removeItem(ID);
     };
 
 };

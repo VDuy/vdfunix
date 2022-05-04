@@ -56,7 +56,7 @@ poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
       header.style.color = 'blue';
 
     })
-    console.log('This only run once');
+  console.log('This only run once');
 })();
 
 // the closure
