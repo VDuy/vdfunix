@@ -11,9 +11,7 @@ submitBtn.addEventListener('click', function (e) {
     clicks += 1;
     getInput();
     saveToStorage();
-
 });
-
 function getInput() {
     var idInput = document.querySelector('#input-id');
     var nameInput = document.querySelector('#input-name');
@@ -27,7 +25,6 @@ function getInput() {
     var dewormedInput = document.querySelector('#input-dewormed');
     var sterilizedInput = document.querySelector('#input-sterilized');
     var submit = true;
-
     const data = {
         id: idInput.value,
         name: nameInput.value,
@@ -112,7 +109,7 @@ function getInput() {
     if (submit) {
         deleteHTML();
         petArr.push(data);
-        console.log(petArr);
+
         renderTableData(petArr);
         clear();
         if (data['vaccinated'] && data['dewormed'] && data['sterilized']) {
