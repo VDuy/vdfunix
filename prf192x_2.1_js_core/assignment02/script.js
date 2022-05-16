@@ -1,5 +1,10 @@
 'use strict';
-'use strict';
+const sidebarTitleEl = document.getElementById('sidebar-title');
+const sidebarEl = document.getElementById('sidebar');
+sidebarTitleEl.addEventListener('click', function () {
+    sidebarEl.classList.toggle('active');
+});
+
 var idInput = document.querySelector('#input-id');
 var nameInput = document.querySelector('#input-name');
 var ageInput = document.querySelector('#input-age');
@@ -99,6 +104,7 @@ submitBtn.addEventListener('click', function (e) {
     petArr.push(data)
     renderTableData(petArr);
     clear();
+    saveToStorage();
 });
 
 const tableBodyEl = document.getElementById("tbody");
@@ -196,4 +202,9 @@ function calBMI() {
         console.log('bmi');
 
     }
+};
+function breedOption() {
+    const option = document.createElement('option')
+    option.innerHTML = '';
+    breedInput.appendChild(option)
 };
