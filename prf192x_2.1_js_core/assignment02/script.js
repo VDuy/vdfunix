@@ -100,13 +100,17 @@ submitBtn.addEventListener('click', function (e) {
     };
 
     petArr.push(data)
+    saveToStorage("petArray", petArr);
     renderTableData(petArr);
     clear();
-    saveToStorage();
 });
 
 const tableBodyEl = document.getElementById("tbody");
 function renderTableData(pets) {
+    var pets = getFromStorage("petArray");
+    if (pets == "null") {
+        pets = [];
+    }
     tableBodyEl.innerHTML = '';
     pets.forEach(pet => {
         const row = document.createElement('tr')
@@ -140,7 +144,12 @@ tableBodyEl.addEventListener('click', function (e) {
     if (!petId) return;
     const isConfirm = confirm('Are you sure?');
     if (!isConfirm) return;
+    var pets = getFromStorage("petArray");
+    if (pets == "null") {
+        pets = [];
+    }
     petArr.splice(petArr.findIndex(pet => pet.id == petId), 1);
+    saveToStorage("petArray", pets);
     renderTableData(petArr);
 })
 
@@ -154,7 +163,7 @@ function healtyPet() {
         healthyCheck = true;
         healtyPetBtn.innerText = 'Show All Pet'
         console.log('show all pet');
-      
+
         petArrChecked = petArr.filter(
             pet => pet.vaccinated == true && pet.sterilized == true && pet.dewormed == true
         )
@@ -194,6 +203,7 @@ function calBMI() {
 
     }
 };
+renderTableData();
 
 // show breed
 function breedOption() {
