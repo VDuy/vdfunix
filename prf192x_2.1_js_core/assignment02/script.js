@@ -21,15 +21,13 @@ var fullDate = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.ge
 
 const petArr = [];
 let petArrChecked = [];
+
 // click submit form
 let submitBtn = document.getElementById('submit-btn');
 var clicks = 0;
-
-// Lấy được dữ liệu từ các Input Form
 submitBtn.addEventListener('click', function (e) {
     e.preventDefault(); // to stop the form submitting
     clicks += 1;
-
     const data = {
         id: idInput.value,
         name: nameInput.value,
@@ -44,7 +42,7 @@ submitBtn.addEventListener('click', function (e) {
         sterilized: sterilizedInput.checked,
     }
 
-    // Validate dữ liệu hợp lệ
+    // Validate data
     if (data.id == "") {
         alert('Please fill the fields');
         return;
@@ -135,7 +133,7 @@ function genderRow(row) {
         id="btn-delete" data-id="${row.id}">Delete</button>
         </td>`
 }
-//  Xóa một thú cưng
+//  delete pet
 tableBodyEl.addEventListener('click', function (e) {
     if (e.target.id != "btn-delete") return;
     const petId = e.target.getAttribute('data-id');
@@ -146,7 +144,6 @@ tableBodyEl.addEventListener('click', function (e) {
     renderTableData(petArr);
 })
 
-// Hiển thị các thú cưng khỏe mạnh
 // click button Show Healthy Pet
 let healthyCheck = false;
 let healtyPetBtn = document.querySelector('#healthy-btn');
@@ -157,11 +154,7 @@ function healtyPet() {
         healthyCheck = true;
         healtyPetBtn.innerText = 'Show All Pet'
         console.log('show all pet');
-        // for (let i = 0; i < petArr.length; i++) {
-        //     if (petArr[i].vaccinated == true && petArr[i].sterilized == true && petArr[i].dewormed == true) {
-        //         petArrChecked.push(petArr[i]);
-        //     }
-        // }
+      
         petArrChecked = petArr.filter(
             pet => pet.vaccinated == true && pet.sterilized == true && pet.dewormed == true
         )
@@ -188,8 +181,6 @@ function calBMI() {
         var typeInput = cal.children[3].textContent;
         var weightInput = cal.children[4].textContent;
         var lengthInput = cal.children[5].textContent;
-
-
         if (typeInput == 'Dog') {
             const dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
             cal.children[11].textContent = dogBMI.toFixed(2);
@@ -203,6 +194,8 @@ function calBMI() {
 
     }
 };
+
+// show breed
 function breedOption() {
     const option = document.createElement('option')
     option.innerHTML = '';
