@@ -137,6 +137,7 @@ function genderRow(row) {
         id="btn-delete" data-id="${row.id}">Delete</button>
         </td>`
 }
+renderTableData();
 //  delete pet
 tableBodyEl.addEventListener('click', function (e) {
     if (e.target.id != "btn-delete") return;
@@ -148,7 +149,7 @@ tableBodyEl.addEventListener('click', function (e) {
     if (pets == "null") {
         pets = [];
     }
-    petArr.splice(petArr.findIndex(pet => pet.id == petId), 1);
+    pets.splice(pets.findIndex(pet => pet.id == petId), 1);
     saveToStorage("petArray", pets);
     renderTableData(petArr);
 })
@@ -168,7 +169,7 @@ function healtyPet() {
             pet => pet.vaccinated == true && pet.sterilized == true && pet.dewormed == true
         )
         renderTableData(petArrChecked);
-        console.log(petArrChecked);
+       
     }
     else {
         healthyCheck = false;
@@ -203,7 +204,7 @@ function calBMI() {
 
     }
 };
-renderTableData();
+
 
 // show breed
 function breedOption() {
@@ -211,3 +212,47 @@ function breedOption() {
     option.innerHTML = '';
     breedInput.appendChild(option)
 };
+
+function breedOption() {
+    const option = document.createElement("option");
+    option.innerHTML = "";
+    breedInput.appendChild(option);
+};
+
+let breedSelect = document.getElementById("input-type");
+breedSelect.addEventListener("change", function (e) {
+    // debugger;
+    var breeds = getBreeds();
+    renderBreed(breeds);
+});
+
+function getBreeds() {
+    let result = [];
+    // debugger;
+    var petType = document.querySelector("#input-type");
+    var petTypeValue = petType.value;
+    if (petTypeValue === "Cat") {
+        result.push("Tabby", "Mixed Breed", "Domestic Short Hair", "Chocolate And Kitten", "Charlie Tux");
+    } else if (petTypeValue === "Dog") {
+        result.push("Mixed Breed", "Husky", "Doberman Pinscher", "Sweetie Pie", "Dober Mix", "Symphs");
+    }
+
+    return result;
+};
+
+function renderBreed(breedArr) {
+    var breedInput = document.querySelector("#input-breed");
+    var html = "";
+    breedArr.forEach((element) => {
+        html += "<option>" + element + "</option>";
+    });
+    breedInput.innerHTML = html;
+
+    breedInput.innerHTML = "";
+    breedArr.forEach((element) => {
+        const option = document.createElement("option");
+        option.innerHTML = element;
+        breedInput.appendChild(option);
+    });
+};
+
