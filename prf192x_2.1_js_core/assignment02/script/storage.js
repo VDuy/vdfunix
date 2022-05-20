@@ -19,6 +19,25 @@ function getFromStorage(key) {
                 var petArr = JSON.parse(value);
                 return petArr;
             }
+            else if (key === "breedArray") {
+                var breedArr = JSON.parse(value);
+                return breedArr;
+            }
+        } else {
+            return null;
+        }
+    } else {
+        console.log('Sorry, your browser does not support web storage...');
+    }
+}
+function getBreedFromStorage(key) {
+    if (typeof (localStorage) !== "undefined") {
+        var value = localStorage.getItem(key);
+        if (value) {
+            if (key === "breedArray") {
+                var breedArr = JSON.parse(value);
+                return breedArr;
+            }
         } else {
             return null;
         }

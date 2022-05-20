@@ -113,7 +113,8 @@ function renderTableData(pets) {
     }
     tableBodyEl.innerHTML = '';
     pets.forEach(pet => {
-        const row = document.createElement('tr')
+        const row = document.createElement('tr');
+        console.log(row.id);
         row.innerHTML = genderRow(pet);
         tableBodyEl.appendChild(row);
     });
@@ -207,11 +208,6 @@ function calBMI() {
 
 
 // show breed
-function breedOption() {
-    const option = document.createElement('option')
-    option.innerHTML = '';
-    breedInput.appendChild(option)
-};
 
 function breedOption() {
     const option = document.createElement("option");
