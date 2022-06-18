@@ -19,12 +19,13 @@ var sterilizedInput = document.querySelector('#input-sterilized');
 var date = new Date();
 var fullDate = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.getFullYear();
 
-const petArr = [];
+// petArr = [];
 let petArrChecked = [];
-
-// click submit form
-let submitBtn = document.getElementById('submit-btn');
 var clicks = 0;
+// click submit form
+const tableBodyEl = document.getElementById("tbody");
+let submitBtn = document.getElementById('submit-btn');
+
 submitBtn.addEventListener('click', function (e) {
     e.preventDefault(); // to stop the form submitting
     clicks += 1;
@@ -33,30 +34,30 @@ submitBtn.addEventListener('click', function (e) {
         name: nameInput.value,
         age: parseInt(ageInput.value),
         type: typeInput.value,
+        breed: breedInput.value,
         weight: parseInt(weightInput.value),
         lengths: parseInt(lengthInput.value),
         color: colorInput.value,
-        breed: breedInput.value,
         vaccinated: vaccinatedInput.checked,
         dewormed: dewormedInput.checked,
         sterilized: sterilizedInput.checked,
     }
 
     // Validate data
-    if (data.id == "") {
+    if (data.id.trim() === "") {
         alert('Please fill the fields');
         return;
-    } else if (data.name == "") {
+    } else if (data.name === "") {
         alert('Please fill the fields');
         return;
-    } else if (data.age == "" || isNaN(data.age)) {
+    } else if (data.age === "" || isNaN(data.age)) {
         alert('Please fill the fields');
         return;
     }
-    else if (data.weight == "" || isNaN(data.weight)) {
+    else if (data.weight === "" || isNaN(data.weight)) {
         alert('Please fill the fields');
         return;
-    } else if (data.lengths == "" || isNaN(data.lengths)) {
+    } else if (data.lengths === "" || isNaN(data.lengths)) {
         alert('Please fill the fields');
         return;
     }
@@ -73,7 +74,7 @@ submitBtn.addEventListener('click', function (e) {
     else if (data.weight < 1 || data.weight > 15) {
         alert('Weight must be between 1 and 15')
         return;
-    } else if (data.length < 1 || data.length > 100) {
+    } else if (data.lengths < 1 || data.lengths > 100) {
         alert('Length must be between 1 and 100!')
         return;
     } else if (data.type == '') {
@@ -85,92 +86,83 @@ submitBtn.addEventListener('click', function (e) {
         return;
     }
     //clear the form
-    function clear() {
-        idInput.value = '';
-        nameInput.value = '';
-        weightInput.value = '';
-        ageInput.value = '';
-        lengthInput.value = '';
-        typeInput.value = '';
-        breedInput.value = '';
-        colorInput.value = '';
-        vaccinatedInput.checked = '';
-        dewormedInput.checked = '';
-        sterilizedInput.checked = '';
-    };
 
     petArr.push(data)
     saveToStorage("petArray", petArr);
     renderTableData(petArr);
     clear();
 });
+function clear() {
+    idInput.value = '';
+    nameInput.value = '';
+    weightInput.value = '';
+    ageInput.value = '';
+    lengthInput.value = '';
+    typeInput.value = '';
+    breedInput.value = '';
+    colorInput.value = '';
+    vaccinatedInput.checked = '';
+    dewormedInput.checked = '';
+    sterilizedInput.checked = '';
+};
 
-const tableBodyEl = document.getElementById("tbody");
-function renderTableData(pets) {
-    var pets = getFromStorage("petArray");
-    if (pets == "null") {
-        pets = [];
-    }
+
+renderTableData(petArr);
+function renderTableData() {
     tableBodyEl.innerHTML = '';
-    pets.forEach(pet => {
+    petArr.forEach(function (petItem, index) {
         const row = document.createElement('tr');
-        console.log(row.id);
-        row.innerHTML = genderRow(pet);
-        tableBodyEl.appendChild(row);
-    });
-}
-function genderRow(row) {
-    return `
-        <th scope="row">${row.id}</th>
-        <td>${row.name}</td>
-        <td>${row.age}</td>
-        <td>${row.type}</td>
-        <td>${row.weight} kg</td>
-        <td>${row.lengths} cm</td>
-        <td>${row.breed}</td>
-        <td><i class="bi bi-square-fill" style="color: ${row.color}"></i></td>
-        <td><i class="bi ${row.vaccinated ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
-        <td><i class="bi ${row.dewormed ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
-        <td><i class="bi ${row.sterilized ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
+        row.innerHTML = `
+        <th scope="row">${petItem.id}</th>
+        <td>${petItem.name}</td>
+        <td>${petItem.age}</td>
+        <td>${petItem.type}</td>
+        <td>${petItem.weight} kg</td>
+        <td>${petItem.lengths} cm</td>
+        <td>${petItem.breed}</td>
+        <td><i class="bi bi-square-fill" style="color: ${petItem.color}"></i></td>
+        <td><i class="bi ${petItem.vaccinated ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
+        <td><i class="bi ${petItem.dewormed ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
+        <td><i class="bi ${petItem.sterilized ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
         <td>?</td>
         <td>${fullDate}</td>
         <td><button type="button" class="btn btn-danger "
-        id="btn-delete" data-id="${row.id}">Delete</button>
-        </td>`
+        onClick = "deletePet('${petItem.id}')"  >Delete</button>
+        </td>`;
+        tableBodyEl.appendChild(row);
+    });
 }
-renderTableData();
+// 
 //  delete pet
-tableBodyEl.addEventListener('click', function (e) {
-    if (e.target.id != "btn-delete") return;
-    const petId = e.target.getAttribute('data-id');
-    if (!petId) return;
+function deletePet(petId) {
     const isConfirm = confirm('Are you sure?');
-    if (!isConfirm) return;
-    var pets = getFromStorage("petArray");
-    if (pets == "null") {
-        pets = [];
+    if (!isConfirm) {
+        for (let i = 0; i < petArr.length; i++) {
+            if (petId === petArr[i].id) {
+                petArr.splice(i, 1);
+                saveToStorage("petArray", petArr);
+                renderTableData(petArr);
+                console.log('deletep');
+                break;
+               
+            }
+        }
     }
-    pets.splice(pets.findIndex(pet => pet.id == petId), 1);
-    saveToStorage("petArray", pets);
-    renderTableData(petArr);
-})
-
+}
 // click button Show Healthy Pet
 let healthyCheck = false;
 let healtyPetBtn = document.querySelector('#healthy-btn');
 healtyPetBtn.setAttribute('onclick', 'healtyPet()');
 function healtyPet() {
-
     if (!healthyCheck) {
         healthyCheck = true;
         healtyPetBtn.innerText = 'Show All Pet'
         console.log('show all pet');
-
         petArrChecked = petArr.filter(
             pet => pet.vaccinated == true && pet.sterilized == true && pet.dewormed == true
         )
         renderTableData(petArrChecked);
-       
+
     }
     else {
         healthyCheck = false;
@@ -209,46 +201,32 @@ function calBMI() {
 
 // show breed
 
-function breedOption() {
-    const option = document.createElement("option");
-    option.innerHTML = "";
-    breedInput.appendChild(option);
-};
+// function breedOption() {
+//     const option = document.createElement("option");
+//     option.innerHTML = "";
+//     breedInput.appendChild(option);
+// };
 
-let breedSelect = document.getElementById("input-type");
-breedSelect.addEventListener("change", function (e) {
-    // debugger;
-    var breeds = getBreeds();
-    renderBreed(breeds);
-});
+// click Select Type
+typeInput.addEventListener("change", function (e) {
 
-function getBreeds() {
-    let result = [];
-    // debugger;
-    var petType = document.querySelector("#input-type");
-    var petTypeValue = petType.value;
-    if (petTypeValue === "Cat") {
-        result.push("Tabby", "Mixed Breed", "Domestic Short Hair", "Chocolate And Kitten", "Charlie Tux");
-    } else if (petTypeValue === "Dog") {
-        result.push("Mixed Breed", "Husky", "Doberman Pinscher", "Sweetie Pie", "Dober Mix", "Symphs");
+    // var breedInput = document.querySelector("#input-breed");
+    breedInput.innerHTML = "<option>Select Breed</option>";
+    const breedDog = breedArr.filter((breedItem) => breedItem.type === "Dog");
+    const breedCat = breedArr.filter((breedItem) => breedItem.type === "Cat")
+
+    if (typeInput.value === "Dog") {
+        breedDog.forEach(function (breedItem) {
+            const option = document.createElement("option");
+            option.innerHTML = `${breedItem.breed}`;
+            breedInput.appendChild(option);
+        });
     }
-
-    return result;
-};
-
-function renderBreed(breedArr) {
-    var breedInput = document.querySelector("#input-breed");
-    var html = "";
-    breedArr.forEach((element) => {
-        html += "<option>" + element + "</option>";
-    });
-    breedInput.innerHTML = html;
-
-    breedInput.innerHTML = "";
-    breedArr.forEach((element) => {
-        const option = document.createElement("option");
-        option.innerHTML = element;
-        breedInput.appendChild(option);
-    });
-};
-
+    if (typeInput.value === "Cat") {
+        breedCat.forEach(function (breedItem) {
+            const option = document.createElement("option");
+            option.innerHTML = `${breedItem.breed}`;
+            breedInput.appendChild(option);
+        });
+    }
+})

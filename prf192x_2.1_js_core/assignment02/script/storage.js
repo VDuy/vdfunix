@@ -1,5 +1,35 @@
 'use strict';
 
+let breedArr = getFromStorage("breedArray");
+let petArr = getFromStorage("petArray");
+// const breedArr1 = {
+//     breed: 'Tappy',
+//     type: 'Cat'
+// };
+// const breedArr2 = {
+//     breed: 'Bull',
+//     type: 'Dog'
+// };
+// const pet1 = {
+//     id: "001",
+//     name: "Tom",
+//     age: 3,
+//     type: "Cat",
+//     breed: "Tappy",
+//     weight: 5,
+//     lengths: 50,
+//     color: "#ff0000",
+//     vaccinated: true,
+//     dewormed: false,
+//     sterilized: false,
+// }
+// if (!getFromStorage("breedArray")) {
+//     saveToStorage("breedArray", [breedArr1, breedArr2])
+// }
+// if (!getFromStorage("petArray")) {
+//     saveToStorage("petArray", [pet1])
+// }
+
 function saveToStorage(key, value) {
     if (typeof (localStorage) !== "undefined") {
         if (Array.isArray(value)) {
@@ -12,36 +42,6 @@ function saveToStorage(key, value) {
 
 };
 function getFromStorage(key) {
-    if (typeof (localStorage) !== "undefined") {
-        var value = localStorage.getItem(key);
-        if (value) {
-            if (key === "petArray") {
-                var petArr = JSON.parse(value);
-                return petArr;
-            }
-            else if (key === "breedArray") {
-                var breedArr = JSON.parse(value);
-                return breedArr;
-            }
-        } else {
-            return null;
-        }
-    } else {
-        console.log('Sorry, your browser does not support web storage...');
-    }
+    return JSON.parse(localStorage.getItem(key));
+
 }
-// function getBreedFromStorage(key) {
-//     if (typeof (localStorage) !== "undefined") {
-//         var value = localStorage.getItem(key);
-//         if (value) {
-//             if (key === "breedArray") {
-//                 var breedArr = JSON.parse(value);
-//                 return breedArr;
-//             }
-//         } else {
-//             return null;
-//         }
-//     } else {
-//         console.log('Sorry, your browser does not support web storage...');
-//     }
-// }

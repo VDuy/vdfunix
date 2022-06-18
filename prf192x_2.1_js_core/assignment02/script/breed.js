@@ -1,67 +1,70 @@
 
 'use strict';
-var petBreed = document.querySelector('#input-breed');
-var petType = document.querySelector('#input-type');
-
-let breedArr = [];
+const petBreed = document.getElementById('input-breed');
+const petType = document.getElementById('input-type');
+const tableBodyElb = document.getElementById("tbody");
+const submitBreed = document.getElementById('submit-btn');
 var clicks = 0;
 
-let submitBreed = document.getElementById('submit-btn')
-    .addEventListener('click', function (e) {
-        e.preventDefault();
-        clicks += 1;
-        const data = {
-            breed: petBreed.value,
-            type: petType.value,
-        }
-        if (breedArr.find((item) => item.breed === data.breed)) {
-            alert(" Breed existed");
-            return;
-        }
-        function clear() {
-            petBreed.value = '';
-            petType.value = '';
-        };
 
-        breedArr.push(data);
-        saveToStorage("breedArray", breedArr);
-        renderTableData(breedArr);
-        clear();
-    });
-const tableBodyEl = document.querySelector("#tbody");
-function renderTableData(pets) {
-    var pets = getFromStorage("breedArray");
-    if (pets == "null") {
-        pets = [];
+
+renderBreedData(breedArr);
+
+submitBreed.addEventListener('click', function (e) {
+    e.preventDefault();
+    clicks += 1;
+
+    const data = {
+        breed: petBreed.value,
+        type: petType.value,
     }
-    tableBodyEl.innerHTML = '';
-    pets.forEach((pet, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = genderRow(pet, index);
-        tableBodyEl.appendChild(row);
-    });
-}
-function genderRow(row, index) {
-    return `
-    <td>${index + 1}</td>
-    <td>${row.breed}</td>
-    <td>${row.type}</td>
-    <td><button id="btn-delete" data-breed-name="${row.breed}" type="button" class="btn btn-danger">Delete</button>
-    </td>`
-}
-renderTableData();
-tableBodyEl.addEventListener('click', function (e) {
-    if (e.target.id != "btn-delete") return;
-    const petBreed = e.target.getAttribute('data-breed-name');
-    if (!petBreed) return;
-    const isConfirm = confirm('Are you sure?');
-    if (!isConfirm) return;
-    var breeds = getFromStorage("breedArray");
-    if (breeds == "null") {
-        breeds = [];
+
+    if (data.breed === "") {
+        alert('Please fill the fields');
+        return;
     }
-    console.log(breeds);
-    breeds.splice(breedArr.findIndex(bre => bre.breed == petBreed), 1);
-    saveToStorage("breedArray", breeds);
-    renderTableData(breedArr);
+    else if (data.type === "Select Type") {
+        alert(" Please pick the type");
+        return;
+    }
+
+    breedArr.push(data);
+    saveToStorage("breedArray", breedArr);
+    renderBreedData(breedArr);
+    clear();
 });
+
+
+function clear() {
+    petBreed.value = '';
+    petType.value = 'Select Type';
+};
+function renderBreedData() {
+    tableBodyElb.innerHTML = "";
+    breedArr.forEach(function (breedItem, index) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+    <td scope="col">${index + 1}</td>
+    <td scope="col">${breedItem.breed}</td>
+    <td scope="col">${breedItem.type}</td>
+    <td>
+    <button type="button" class="btn btn-danger"
+    onClick = "deleteBreed('${breedItem.breed}')" >Delete</button>
+    </td>`;
+        tableBodyElb.appendChild(row);
+    });
+}
+// renderBreedData();
+function deleteBreed(breed) {
+    const isConfirm = confirm('Are you sure?');
+    if (!isConfirm) {
+        for (let i = 0; i < breedArr.length; i++) {
+            if (breed === breedArr[i].breed) {
+                breedArr.splice(i, 1);
+                saveToStorage("breedArray", breedArr);
+                renderBreedData(breedArr);
+                break;
+            }
+        }
+    }
+};
