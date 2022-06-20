@@ -38,7 +38,8 @@ function renderTableData() {
         <td><i class="bi ${petItem.sterilized ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
         <td>${fullDate}</td>
         <td>
-        <button type="button" onClick = "editPet()'${petItem.id}'" class="btn btn-warning">Edit</button>
+        <button type="button" 
+        onClick = "editPet('${petItem.id}')" class="btn btn-warning">Edit</button>
         </td>`;
         tableBodyEl.appendChild(row);
     });
@@ -61,9 +62,11 @@ function editPet(id) {
     sterilizedInput.value = pet.sterilized;
 
     renderBreedData();
-    breedInput.value = `${pet.breed}`
+    breedInput.value = `${pet.breed}`;
 }
+
 typeInput.addEventListener("click", renderBreedData);
+
 function renderBreedData() {
 
     breedInput.innerHTML = "<option>Select Breed</option>";
@@ -87,8 +90,7 @@ function renderBreedData() {
 }
 
 submitBtn.addEventListener('click', function (e) {
-    e.preventDefault(); // to stop the form submitting
-    clicks += 1;
+
     const data = {
         id: idInput.value,
         name: nameInput.value,
@@ -121,11 +123,6 @@ submitBtn.addEventListener('click', function (e) {
         alert('Please fill the fields');
         return;
     }
-    // validate unique id
-    else if (petArr.find((item) => item.id === data.id)) {
-        alert("ID must unique");
-        return;
-    }
     // validate fields
     else if (data.age < 1 || data.age > 15) {
         alert('Age must be between 1 and 15!')
@@ -145,11 +142,11 @@ submitBtn.addEventListener('click', function (e) {
         alert('Please select Breed!')
         return;
     }
-    data.date = petArr[i].date;
+    const index = petArr.findIndex((pet) => pet.id === data.id);
+    data.date = petArr[index].date;
     petArr[index] = data;
     // petArr.push(data);
     saveToStorage("petArray", petArr);
-   formEl.classList.add("hide");
+    formEl.classList.add("hide");
     renderTableData(petArr);
-   
 });
