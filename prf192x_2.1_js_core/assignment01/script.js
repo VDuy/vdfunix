@@ -1,24 +1,24 @@
 
 'use strict';
-var idInput = document.querySelector('#input-id');
-var nameInput = document.querySelector('#input-name');
-var ageInput = document.querySelector('#input-age');
-var typeInput = document.querySelector('#input-type');
-var weightInput = document.querySelector('#input-weight');
-var lengthInput = document.querySelector('#input-length');
-var colorInput = document.querySelector('#input-color-1');
-var breedInput = document.querySelector('#input-breed');
-var vaccinatedInput = document.querySelector('#input-vaccinated');
-var dewormedInput = document.querySelector('#input-dewormed');
-var sterilizedInput = document.querySelector('#input-sterilized');
-var date = new Date();
-var fullDate = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.getFullYear();
+const idInput = document.querySelector('#input-id');
+const nameInput = document.querySelector('#input-name');
+const ageInput = document.querySelector('#input-age');
+const typeInput = document.querySelector('#input-type');
+const weightInput = document.querySelector('#input-weight');
+const lengthInput = document.querySelector('#input-length');
+const colorInput = document.querySelector('#input-color-1');
+const breedInput = document.querySelector('#input-breed');
+const vaccinatedInput = document.querySelector('#input-vaccinated');
+const dewormedInput = document.querySelector('#input-dewormed');
+const sterilizedInput = document.querySelector('#input-sterilized');
+const date = new Date();
+const fullDate = date.getUTCDate() + '/' + ((date.getMonth()) + 1) + '/' + date.getFullYear();
 
 const petArr = [];
 let petArrChecked = [];
 // click submit form
 let submitBtn = document.getElementById('submit-btn');
-var clicks = 0;
+let clicks = 0;
 
 // Lấy được dữ liệu từ các Input Form
 submitBtn.addEventListener('click', function (e) {
@@ -70,7 +70,7 @@ submitBtn.addEventListener('click', function (e) {
     else if (data.weight < 1 || data.weight > 15) {
         alert('Weight must be between 1 and 15')
         return;
-    } else if (data.length < 1 || data.length > 100) {
+    } else if (data.lengths < 1 || data.lengths > 100) {
         alert('Length must be between 1 and 100!')
         return;
     } else if (data.type == '') {

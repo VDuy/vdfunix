@@ -92,6 +92,7 @@ submitBtn.addEventListener('click', function (e) {
     renderTableData(petArr);
     clear();
 });
+
 function clear() {
     idInput.value = '';
     nameInput.value = '';
@@ -144,7 +145,7 @@ function deletePet(petId) {
                 renderTableData(petArr);
                 console.log('deletep');
                 break;
-               
+
             }
         }
     }
@@ -173,39 +174,7 @@ function healtyPet() {
     };
 }
 
-// calculate bmi
-let bmiPetBtn = document.getElementById('bmi-btn');
-bmiPetBtn.setAttribute('onclick', 'calBMI()');
-function calBMI() {
-    var table = document.querySelectorAll("#tbody tr");
-    var dataStr = [];
-    for (var i = 0; i < table.length; i++) {
-        var cal = table[i];
-        var typeInput = cal.children[3].textContent;
-        var weightInput = cal.children[4].textContent;
-        var lengthInput = cal.children[5].textContent;
-        if (typeInput == 'Dog') {
-            const dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContent = dogBMI.toFixed(2);
-        }
-        else if (typeInput == 'Cat') {
-            const catBMI = (Number(weightInput.value) * 886) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContentF = catBMI.toFixed(2);
-        }
-        dataStr.push(cal);
-        console.log('bmi');
 
-    }
-};
-
-
-// show breed
-
-// function breedOption() {
-//     const option = document.createElement("option");
-//     option.innerHTML = "";
-//     breedInput.appendChild(option);
-// };
 
 // click Select Type
 typeInput.addEventListener("change", function (e) {
