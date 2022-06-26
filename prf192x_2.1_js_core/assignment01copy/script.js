@@ -38,6 +38,7 @@ submitBtn.addEventListener('click', function (e) {
         vaccinated: vaccinatedInput.checked,
         dewormed: dewormedInput.checked,
         sterilized: sterilizedInput.checked,
+        bmi: "?",
     }
     const validate = validateData(data);
     if (validate) {
@@ -125,7 +126,7 @@ function renderTableData(petArr) {
         <td><i class="bi ${petArr[i].vaccinated ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
         <td><i class="bi ${petArr[i].dewormed ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
         <td><i class="bi ${petArr[i].sterilized ? "bi-check-circle-fill" : "bi bi-x-circle-fill"} "></i></td>
-        <td>?</td>
+        <td>${petArr[i].bmi}</td>
         <td>${fullDate}</td>
         <td>
         <button type="button" class="btn btn-danger "
@@ -180,25 +181,10 @@ healtyPetBtn.addEventListener('click', function () {
 let bmiPetBtn = document.getElementById('bmi-btn');
 bmiPetBtn.setAttribute('onclick', 'calBMI()');
 function calBMI() {
-    var table = document.querySelectorAll("#tbody tr");
-    var dataStr = [];
-    for (var i = 0; i < table.length; i++) {
-        var cal = table[i];
-        var typeInput = cal.children[3].textContent;
-        var weightInput = cal.children[4].textContent;
-        var lengthInput = cal.children[5].textContent;
-
-
-        if (typeInput == 'Dog') {
-            const dogBMI = (Number(weightInput.value) * 703) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContent = dogBMI.toFixed(2);
-        }
-        else if (typeInput == 'Cat') {
-            const catBMI = (Number(weightInput.value) * 886) / (Number(lengthInput.value) ^ 2);
-            cal.children[11].textContentF = catBMI.toFixed(2);
-        }
-        dataStr.push(cal);
-        console.log('bmi');
-
+    for (let i = 0; i < petArr.length; i++) {
+        petArr[i].bmi = petArr[i].type === "Dog"
+            ? ((petArr[i].weight * 703) / petArr[i].length ** 2).toFixed(2)
+            : ((petArr[i].weight * 886) / petArr[i].length ** 2).toFixed(2);
     }
+    renderTableData(petArr)
 };
